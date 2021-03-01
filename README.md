@@ -16,10 +16,11 @@ Should the author of this repository has further free capacity, further tensorfl
 
 * []()
 
-## Useful References
+## Useful TensorFlow References
 * [Beginner guide TensorFlow](https://www.tensorflow.org/overview)
 * [Advanced guild Keras subclassing](https://www.tensorflow.org/tutorials/quickstart/advanced)
 * [Using Keras with TFX](https://www.tensorflow.org/tfx/guide/keras)
+* [Train custom model with Keras: a walkthrough](https://www.tensorflow.org/tutorials/customization/custom_training_walkthrough)
 
 ## Book References:
 * [Online Early Access: François Chollet, Deep Learning with Python, 2021, 2nd, Manning Publications](https://www.manning.com/books/deep-learning-with-python-second-edition), click on "Look Inside" to access the current MEAP.
@@ -28,7 +29,7 @@ Should the author of this repository has further free capacity, further tensorfl
 ## Online Labs:
 * [QwikLabs - TensorFlow on GCP](https://www.qwiklabs.com/quests/83?catalog_rank=%7B%22rank%22%3A3%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&search_id=9114382) is an online Lab which works you trough a guided tutorial to use TensorFlow on Google Cloud Platform (GCP). You will do the Lab in a real GCP virtual machine in a time limited base. Unfortunately the QwikLab quests are not free of charge, but it total worth it to have a monthly subscription to go through some quest to gain knowledge of distributed training of tensorflow in GCP.
 
-## Fun online sources:
+## Fun Online Sources:
 * [TensorFlow Playground](https://playground.tensorflow.org/) helps to understand the fundamental of neural network through a interactive fun way.
 * [Teachable Machine](https://teachablemachine.withgoogle.com/) is an online Application, allows you to train simple Vison and Audio Models with your web camera or mic very quickly. You can export the models and use them for any of your school projects.
 
