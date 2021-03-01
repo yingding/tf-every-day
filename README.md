@@ -33,5 +33,5 @@ Should the author of this repository has further free capacity, further tensorfl
 
 ## Advanced Science Reference:
 * [HuggingFace Transformer for NLP](https://huggingface.co/transformers/index.html)
-* [Building AutoEncoder in Keras](blog.keras.io/building-autoencoders-in-keras)
+* [Building AutoEncoder in Keras](https://blog.keras.io/building-autoencoders-in-keras.html)
 * [Time Series Forcasting with SARIMAX](https://www.statsmodels.org/stable/generated/statsmodels.tsa.statespace.sarimax.SARIMAX.html)
