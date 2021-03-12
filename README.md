@@ -14,7 +14,7 @@ Should the author of this repository has further free capacity, further tensorfl
 
 ## Current Available Examples
 
-* [Using Functional API to create a custom keras model](01CustomModelWithFunctionalAPI)
+* [01: Using Functional API to create a custom keras model](01CustomModelWithFunctionalAPI)
 
 ## Useful TensorFlow References
 * [Beginner guide TensorFlow](https://www.tensorflow.org/overview)
