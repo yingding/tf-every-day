@@ -12,3 +12,7 @@
 
 ## Distance between two vectors
 *  [Euclidean Distance](http://mathonline.wikidot.com/the-distance-between-two-vectors)
+
+## Loss
+
+* [Contrastive loss](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) which is commonly used in a siamese network (Hadsell-et-al.'06)
