@@ -1,5 +1,5 @@
 # tf-every-day
-This ist a repository for learning series TensorFlow 2.x on every day.
+This is a repository for learning series TensorFlow 2.x on every day.
 
 ## Biography of Author
 The author of this repository is a machine learning enthusiast, computer science researcher, fullstack and mobile developer.  
