@@ -17,6 +17,10 @@ Should the author of this repository has further free capacity, further tensorfl
 * [01: Using Functional API to create a custom keras model](01CustomModelWithFunctionalAPI)
 * [02: Build a muliple output model with keras](02BuildMultipleOutputModel)
 
+## Additional Read for this Repository's Examples 
+
+Follow this [additional read](AdditionalReferences.md) to better understand the examples in this repository 
+
 ## Useful TensorFlow References
 * [Beginner guide TensorFlow](https://www.tensorflow.org/overview)
 * [Advanced guild Keras subclassing](https://www.tensorflow.org/tutorials/quickstart/advanced)
