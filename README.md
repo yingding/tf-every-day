@@ -16,6 +16,7 @@ Should the author of this repository has further free capacity, further tensorfl
 
 * [01: Using Functional API to create a custom keras model](01CustomModelWithFunctionalAPI)
 * [02: Build a muliple output model with keras](02BuildMultipleOutputModel)
+* [03: Build a multiple input model to detect images similarity (Siamese ANN)](03MultipleInputsImageSimilarityModel)
 
 ## Additional Read for this Repository's Examples 
 
