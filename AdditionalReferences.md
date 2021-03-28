@@ -15,5 +15,5 @@
 
 ## Loss
 
-* [Contrastive loss](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) which is commonly used in a siamese network (Hadsell-et-al.'06)
+* [Contrastive loss](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) which is commonly used in a siamese network (Hadsell-et-al.'06): In case the image are similar, the tensor difference of images represention will be the loss term. in case the image are dissimilar, the margin enforce the images tensor representation to have a min distance of margin.
 * [Huber loss](https://en.wikipedia.org/wiki/Huber_loss) (Wikipedia)
