@@ -20,3 +20,4 @@
 
 ## Network Structure
 * [Wide & Deep Neural Network](https://ai.googleblog.com/2016/06/wide-deep-learning-better-together-with.html) from ai.googleblog.
+* [ResNets Architecture](https://www.coursera.org/lecture/convolutional-neural-networks/resnets-HAhz9) from Coursera "Convolutional Neural Networks" course by Andrew Ng
