@@ -27,6 +27,7 @@ Follow this [additional read](AdditionalReferences.md) to better understand the 
 * [Advanced guild Keras subclassing](https://www.tensorflow.org/tutorials/quickstart/advanced)
 * [Using Keras with TFX](https://www.tensorflow.org/tfx/guide/keras)
 * [Train custom model with Keras: a walkthrough](https://www.tensorflow.org/tutorials/customization/custom_training_walkthrough)
+* [TensorBoard: TF's visualization toolkit](https://www.tensorflow.org/tensorboard)
 
 ## Book References:
 * [Online Early Access: François Chollet, Deep Learning with Python, 2021, 2nd, Manning Publications](https://www.manning.com/books/deep-learning-with-python-second-edition), click on "Look Inside" to access the current MEAP.
