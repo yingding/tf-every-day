@@ -36,8 +36,14 @@ python3 -m pip install -U pip
 
 Install the tensorflow-macos version 2.6.0 and tensorflow-metal
 ```
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal 
+```
+
+alternatively you can installed the tensorflow-macos==2.6.0 without the tensorflow-federated
+```
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.6.0 tensorflow-metal
 ```
+
 we need to use `SYSTEM_VERSION_COMPAT=0`, otherwise an error will occur.
 More info regarding the error can be found:
 * https://developer.apple.com/forums/thread/683757
@@ -74,6 +80,17 @@ maxCacheSize: 2.00 GB
 Should you are still in the VENV, you can deactivate it with
 ```
 deactivate
+```
+
+## Uninstall
+```
+ pip3 uninstall tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal
+
+```
+
+## See the pip versions of Federated 
+```
+pip index versions tensorflow-federated
 ```
 
 
