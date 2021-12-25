@@ -40,10 +40,12 @@ Search Pypi.org, since pip search is deactivated indefinitively.
 https://pypi.org/project/tensorflow-federated/
 ```
 
-Install the tensorflow-macos version 2.6.0 and tensorflow-metal
+Install the tensorflow-macos version 2.5.0 and tensorflow-metal==0.2.0
 ```
-SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal 
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal==0.2.0 
 ```
+notice:\
+tensorflow-metal 0.3.0 doesn't work with tensorflow-federated 0.19.0
 
 alternatively you can installed the tensorflow-macos==2.6.0 without the tensorflow-federated
 ```
