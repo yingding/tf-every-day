@@ -34,6 +34,12 @@ Update the pip
 python3 -m pip install -U pip
 ```
 
+Search Pypi.org, since pip search is deactivated indefinitively.
+```
+# browse URL to get the latest version
+https://pypi.org/project/tensorflow-federated/
+```
+
 Install the tensorflow-macos version 2.6.0 and tensorflow-metal
 ```
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal 
