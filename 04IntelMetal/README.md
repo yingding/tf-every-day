@@ -18,7 +18,15 @@ Since at the timepoint of writing, only `python3.8` is supported, we need to mak
 ```
 The path `~/metal3.8` is where you would like to have your virtual env
 
-## Install the TensorFlow_Maco and Tensorflow Metal
+## (optional) uninstall the previous Tensorflow _Macos and Tensorflow Metal
+```
+# uninstall existing tensorflow-macos and tensorflow-metal
+python -m pip uninstall tensorflow-macos
+python -m pip uninstall tensorflow-metal
+python -m pip uninstall tensorflow-federated
+```
+
+## Install the TensorFlow_Macos and Tensorflow Metal
 first we need to activate the virtual env, we have created sofar
 ```
 source ~/metal3.8/bin/activte
@@ -45,12 +53,13 @@ Install the tensorflow-macos version 2.5.0 and tensorflow-metal==0.2.0
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal==0.2.0 
 ```
 notice:\
-tensorflow-metal 0.3.0 doesn't work with tensorflow-federated 0.19.0
+tensorflow-metal 0.3.0 doesn't work with tensorflow-federated 0.19.0, since tensorflow-federated 0.19.0 depends on tf 2.5
 
 alternatively you can installed the tensorflow-macos==2.6.0 without the tensorflow-federated
 ```
-SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.6.0 tensorflow-metal
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.7.0 tensorflow-metal==0.3.0
 ```
+this will install tensorflow 2.7.0 version 
 
 we need to use `SYSTEM_VERSION_COMPAT=0`, otherwise an error will occur.
 More info regarding the error can be found:
