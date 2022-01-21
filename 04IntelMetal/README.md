@@ -26,6 +26,11 @@ python -m pip uninstall tensorflow-metal
 python -m pip uninstall tensorflow-federated
 ```
 
+or single line
+```
+python -m pip uninstall tensorflow-macos tensorflow-metal tensorflow-federated
+```
+
 ## Install the TensorFlow_Macos and Tensorflow Metal
 first we need to activate the virtual env, we have created sofar
 ```
@@ -55,11 +60,18 @@ SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated
 notice:\
 tensorflow-metal 0.3.0 doesn't work with tensorflow-federated 0.19.0, since tensorflow-federated 0.19.0 depends on tf 2.5
 
-alternatively you can installed the tensorflow-macos==2.6.0 without the tensorflow-federated
+alternatively you can installed the tensorflow-macos==2.7.0 without the tensorflow-federated
 ```
-SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.7.0 tensorflow-metal==0.3.0
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.7.0 tensorflow-metal==0.3.0 
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-federated==0.19.0
 ```
-this will install tensorflow 2.7.0 version 
+this will install tensorflow 2.7.0 version,
+You may see an dependency warning:
+```
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+tensorflow-macos 2.7.0 requires tensorflow-estimator<2.8,~=2.7.0rc0, but you have tensorflow-estimator 2.5.0 which is incompatible.
+```
+but it will work with the tensorflow-federated
 
 we need to use `SYSTEM_VERSION_COMPAT=0`, otherwise an error will occur.
 More info regarding the error can be found:
