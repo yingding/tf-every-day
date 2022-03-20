@@ -18,12 +18,17 @@ Since at the timepoint of writing, only `python3.8` is supported, we need to mak
 ```
 The path `~/metal3.8` is where you would like to have your virtual env
 
-## (optional) uninstall the previous Tensorflow _Macos and Tensorflow Metal
+## (optional) upgrade pip
+```console
+python3 -m pip install --upgrade pip
 ```
+
+## (optional) uninstall the previous Tensorflow _Macos and Tensorflow Metal
+```console
 # uninstall existing tensorflow-macos and tensorflow-metal
-python -m pip uninstall tensorflow-macos
-python -m pip uninstall tensorflow-metal
-python -m pip uninstall tensorflow-federated
+python -m pip uninstall -y tensorflow-macos;
+python -m pip uninstall -y tensorflow-metal;
+python -m pip uninstall -y tensorflow-federated
 ```
 
 or single line
@@ -53,6 +58,24 @@ Search Pypi.org, since pip search is deactivated indefinitively.
 https://pypi.org/project/tensorflow-federated/
 ```
 
+#### Install tensorflow macos 2.8.0
+You may want to updated pip firt
+```console
+python3 -m pip install --upgrade pip
+```
+
+```console
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.8.0 tensorflow-metal==0.4.0;
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-federated==0.20.0
+```
+
+we need to use `SYSTEM_VERSION_COMPAT=0`, otherwise an error will occur.
+More info regarding the error can be found:
+* https://developer.apple.com/forums/thread/683757
+* https://developer.apple.com/metal/tensorflow-plugin/
+
+
+#### (Deprecagted) install tensorflow macos 2.5.0
 Install the tensorflow-macos version 2.5.0 and tensorflow-metal==0.2.0
 ```
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.5.0 tensorflow-federated==0.19.0 tensorflow-metal==0.2.0 
@@ -65,6 +88,12 @@ alternatively you can installed the tensorflow-macos==2.7.0 without the tensorfl
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.7.0 tensorflow-metal==0.3.0 
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-federated==0.19.0
 ```
+
+```
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.8.0 tensorflow-metal==0.4.0;
+SYSTEM_VERSION_COMPAT=0 pip install tensorflow-federated==0.20.0
+```
+
 this will install tensorflow 2.7.0 version,
 You may see an dependency warning:
 ```
