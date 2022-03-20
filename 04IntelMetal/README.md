@@ -33,7 +33,7 @@ python -m pip uninstall -y tensorflow-federated
 
 or single line
 ```
-python -m pip uninstall tensorflow-macos tensorflow-metal tensorflow-federated
+python -m pip uninstall -y tensorflow-macos tensorflow-metal tensorflow-federated
 ```
 
 ## Install the TensorFlow_Macos and Tensorflow Metal
@@ -64,6 +64,13 @@ You may want to updated pip firt
 python3 -m pip install --upgrade pip
 ```
 
+Run on Macosx 12.3
+```console
+python3 -m pip install tensorflow-macos==2.8.0 tensorflow-metal==0.4.0;
+python3 -m pip install tensorflow-federated==0.20.0
+```
+
+Run on Macosx 12.2.1
 ```console
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-macos==2.8.0 tensorflow-metal==0.4.0;
 SYSTEM_VERSION_COMPAT=0 pip install tensorflow-federated==0.20.0
