@@ -17,6 +17,10 @@ Since at the timepoint of writing, only `python3.8` is supported, we need to mak
 ```
 The path `~/jax3.8` is where you would like to have your virtual env
 
+## Reference:
+* Google/JAX Github: https://github.com/google/jax
+* Jax Quick Start Doc: https://jax.readthedocs.io/en/latest/notebooks/quickstart.html
+
 
 ## Install jax
 ```
