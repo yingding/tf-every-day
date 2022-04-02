@@ -1,0 +1,3 @@
+# call in your venv: python3 -m pip install -r <path_to_this_file>/requirements.txt
+pandas
+matplotlib
