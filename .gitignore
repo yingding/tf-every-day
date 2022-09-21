@@ -133,3 +133,8 @@ dmypy.json
 
 # no intellij workspace
 .idea/
+
+# ignore the my notebooks testing books
+mynotebooks/
+mynotebooks/**
+
