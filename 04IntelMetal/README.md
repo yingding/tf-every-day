@@ -3,6 +3,8 @@ Install Metal Plugin for TensorFlow Macos to use GPU with TensorFlow 2.6 on a In
 
 ## Install Python3.8 VENV
 ```
+brew search python
+
 brew install python@3.8
 brew info python@3.8
 ```
@@ -12,10 +14,22 @@ Python has been installed as
   /usr/local/opt/python@3.8/bin/python3
 ```
 
+on the console of M1 apple silicon
+```console
+Python has been installed as
+  /opt/homebrew/bin/python3.8
+```
+
 Since at the timepoint of writing, only `python3.8` is supported, we need to make a VENV on a specific version
+with Intel chip
 ```
 /usr/local/opt/python@3.8/bin/python3 -m venv ~/metal3.8
 ```
+with Apple silicon
+```
+/opt/homebrew/bin/python3.8 -m venv ~/metal3.8
+```
+
 The path `~/metal3.8` is where you would like to have your virtual env
 
 ## (optional) upgrade pip
