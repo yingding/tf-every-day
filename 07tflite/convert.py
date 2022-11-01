@@ -45,6 +45,7 @@ converter.target_spec.supported_ops = [
     tf.lite.OpsSet.SELECT_TF_OPS # enbalbe TensorFlow ops
 ]
 converter.experimental_enable_resource_variables = True
+# converted to a tflite model binary
 tflite_model = converter.convert()
 
 tf_lite_model_path = create_default_tflite_model_path('model.tflite')
