@@ -1,9 +1,10 @@
 # About this repo
 
 Following the instruction of On-device Training to 
-* train a mnist model
-* convert the trained model to tflite using compression
-* transfer learning on android device
+* train a mnist model (train.py)
+* convert the trained model to tflite using compression (convert.py)
+* inference the compressed model (inference.py)
+* transfer learning on python, or android device (transfer.py)
 
 
 ## Reference:
