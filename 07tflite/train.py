@@ -11,6 +11,7 @@ import numpy as np
 import tensorflow as tf
 import os
 from custom_model import Model, IMG_SIZE
+from helper import create_default_checkpoint_subfolder
 
 # print(f"Tensorflow verion: {tf.__version__}")
 print(f"Tensorflow verion: {tf.version.VERSION}")
@@ -54,13 +55,9 @@ for i in range(NUM_EPOCHS):
         print(f"   loss: {losses[i]:.3f}")
 
 # Save the trained weights to a checkpoint
-current_path = os.path.abspath(os.getcwd())
-current_model_path = os.path.join(current_path, "tmp")
-
-if not os.path.exists(current_model_path):
-    os.makedirs(current_model_path)
-print(current_path)
-m.save(f"{current_model_path}/model.ckpt")
+current_model_path = create_default_checkpoint_subfolder()
+if current_model_path is not None:
+    m.save(f"{current_model_path}/model.ckpt")
 
 ###
 # Plot the training result

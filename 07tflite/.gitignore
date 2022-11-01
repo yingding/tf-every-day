@@ -1,2 +1,7 @@
-/tmp
-/tmp/**
+#/tmp
+#/tmp/**
+#/saved_model
+#/saved_model/**
+
+/model
+/model/**
