@@ -1,7 +1,9 @@
 # About this project
-Install Metal Plugin for TensorFlow Macos to use GPU with TensorFlow 2.6 on a Intel Macbook 2019 with AMD 555X
+Install Metal Plugin for TensorFlow Macos to use GPU with TensorFlow 2.9.2 on:
+* M1 Max Macbook pro 2021
+* Intel Macbook pro 2019 with AMD 555X
 
-# Install on M1 apple silicon
+# 1. Install on M1 apple silicon
 
 ## Create a VENV
 Create a `tff3.9` python venv 
@@ -36,7 +38,7 @@ Reference:
 
 <!-- # python3 -m pip install attrs==21.4 dp-accounting==0.1.2 matplotlib==3.3.4 pandas==1.1.4 scikit-learn==1.0.2 tensorflow-datasets==4.5.2 tensorflow-probability==0.15 --no-cache-dir -->
 
-# Install on Intel 
+# 2. Install on Intel 
 ## Install Python3.8 VENV
 ```
 brew search python
