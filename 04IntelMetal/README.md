@@ -1,6 +1,42 @@
 # About this project
 Install Metal Plugin for TensorFlow Macos to use GPU with TensorFlow 2.6 on a Intel Macbook 2019 with AMD 555X
 
+# Install on M1 apple silicon
+
+## Create a VENV
+Create a `tff3.9` python venv 
+```console
+/opt/homebrew/bin/python3.9 -m venv ~/VENV/tff3.9
+source ~/VENV/tff3.9/bin/activate
+python3 -m pip install --upgrade pip
+```
+
+
+## Install tensorflow macos 2.9.1 and metal 0.5.1, federated 0.34.0
+
+Run on Macosx 12.6.1 M1 apple silicon within a python3.9 venv.
+The steps shall not be changed in orders.
+<!-- python3 -m pip uninstall -y tensorflow-macos tensorflow-metal tensorflow-federated attrs dm-tree farmhashpy portpicker semantic-version tensorflow-model-optimization tensorflow-privacy tqdm cachetools grpcio dp-accounting numpy matplotlib pandas scikit-learn tensorflow-datasets tensorflow-probability jax jaxlib scipy  -->
+
+```console
+# uninstall all packages 
+python3 -m pip freeze | xargs pip uninstall -y
+
+python3 -m pip install tensorflow-macos==2.9.2 --no-cache-dir
+python3 -m pip install attrs==21.4.0 dp-accounting==0.1.2 matplotlib==3.6.2 pandas==1.5.1 scikit-learn==1.1.3 tensorflow-datasets==4.5.2 tensorflow-probability==0.15 --no-cache-dir
+
+python3 -m pip install farmhashpy==0.4.0 portpicker==1.5 semantic-version==2.6 tensorflow-model-optimization==0.7.3 tensorflow-privacy==0.8.4 --no-dependencies --no-cache-dir
+
+# can not use tensorflow-metal==0.6.0 got a bus error
+python3 -m pip install jax==0.3.24 jaxlib==0.3.24 tensorflow-metal==0.5.1 numpy==1.23.4 --no-cache-dir
+python3 -m pip install tensorflow-federated==0.34.0 --no-deps --no-cache-dir
+```
+Reference:
+* Uninstall all pip venv packages: https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip/11250821#11250821
+
+<!-- # python3 -m pip install attrs==21.4 dp-accounting==0.1.2 matplotlib==3.3.4 pandas==1.1.4 scikit-learn==1.0.2 tensorflow-datasets==4.5.2 tensorflow-probability==0.15 --no-cache-dir -->
+
+# Install on Intel 
 ## Install Python3.8 VENV
 ```
 brew search python
@@ -50,7 +86,7 @@ or single line
 python -m pip uninstall -y tensorflow-macos tensorflow-metal tensorflow-federated
 ```
 
-## Install the TensorFlow_Macos and Tensorflow Metal
+## Install the TensorFlow Macos and Tensorflow Metal
 first we need to activate the virtual env, we have created sofar
 ```
 source ~/metal3.8/bin/activte
@@ -70,36 +106,6 @@ Search Pypi.org, since pip search is deactivated indefinitively.
 ```
 # browse URL to get the latest version
 https://pypi.org/project/tensorflow-federated/
-```
-
-#### INstall tensorflow macos 2.9.1 and metal 0.5.1, federated 0.34.0
-Create a `tff3.9` python venv 
-```console
-/opt/homebrew/bin/python3.9 -m venv ~/VENV/tff3.9
-source ~/VENV/tff3.9/bin/activate
-python3 -m pip install --upgrade pip
-```
-
-Run on Macosx 12.6.1 M1 apple silcon
-python3.9
-```console
-python3 -m pip uninstall -y tensorflow-macos tensorflow-metal tensorflow-federated attrs dm-tree farmhashpy portpicker semantic-version tensorflow-model-optimization tensorflow-privacy tqdm cachetools grpcio dp-accounting numpy matplotlib pandas scikit-learn tensorflow-datasets tensorflow-probability jax jaxlib scipy 
-
-# uninstall all packages 
-# https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip/11250821#11250821
-python3 -m pip freeze | xargs pip uninstall -y
-
-python3 -m pip install tensorflow-macos==2.9.2 --no-cache-dir
-
-python3 -m pip install attrs==21.4.0 dp-accounting==0.1.2 matplotlib==3.6.2 pandas==1.5.1 scikit-learn==1.1.3 tensorflow-datasets==4.5.2 tensorflow-probability==0.15 --no-cache-dir
-
-# python3 -m pip install attrs==21.4 dp-accounting==0.1.2 matplotlib==3.3.4 pandas==1.1.4 scikit-learn==1.0.2 tensorflow-datasets==4.5.2 tensorflow-probability==0.15 --no-cache-dir
-
-python3 -m pip install farmhashpy==0.4.0 portpicker==1.5 semantic-version==2.6 tensorflow-model-optimization==0.7.3 tensorflow-privacy==0.8.4 --no-dependencies --no-cache-dir
-
-# can not use tensorflow-metal==0.6.0 got a bus error
-python3 -m pip install jax==0.3.24 jaxlib==0.3.24 tensorflow-metal==0.5.1 numpy==1.23.4 --no-cache-dir
-python3 -m pip install tensorflow-federated==0.34.0 --no-deps --no-cache-dir
 ```
 
 #### Install tensorflow macos 2.8.0
