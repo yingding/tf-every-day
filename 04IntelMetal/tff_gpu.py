@@ -2,6 +2,8 @@ import time
 import tensorflow as tf
 import tensorflow_federated as tff
 
+print(tf.version.VERSION)
+
 # Load simulation data.
 source, _ = tff.simulation.datasets.emnist.load_data()
 def client_data(n):
@@ -25,7 +27,7 @@ def model_fn():
       metrics=[tf.keras.metrics.SparseCategoricalAccuracy()])
 
 # Simulate a few rounds of training with the selected client devices.
-trainer = tff.learning.build_federated_averaging_process(
+trainer = tff.learning.algorithms.build_weighted_fed_avg(
   model_fn,
   client_optimizer_fn=lambda: tf.keras.optimizers.SGD(0.1))
 state = trainer.initialize()
@@ -33,8 +35,13 @@ state = trainer.initialize()
 # measure time elapse
 start_time = time.time()
 for _ in range(5):
-  state, metrics = trainer.next(state, train_data)
-  print(metrics['train']['loss'])
+  result = trainer.next(state, train_data)
+  state = result.state
+  metrics = result.metrics
+  
+  print(metrics['client_work']['train']['loss'])
+  # print(metrics['train']['loss'])
+
 end_time = time.time()
 
 print(f"executed in {end_time - start_time} secs")
