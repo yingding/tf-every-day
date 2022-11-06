@@ -13,7 +13,12 @@ from utils.custom_model import Model, IMG_SIZE
 from utils.helper import (
     create_default_tf_checkpoint_subfolder, 
     create_default_data_exchange_path,
-    PreviousTrainingResults
+    PreviousTrainingResults,
+    SerializableList
+)
+from utils.visual import (
+    display_training_loss,
+    PlotLineData
 )
 
 # print(f"Tensorflow verion: {tf.__version__}")
@@ -62,19 +67,17 @@ current_model_path = create_default_tf_checkpoint_subfolder()
 if current_model_path is not None:
     m.save(f"{current_model_path}/model.ckpt")
 
-###
-# Plot the training result
-###
-
-plt.plot(epochs, losses, label='Prfe-training')
-plt.ylim([0, max(plt.ylim())])
-plt.xlabel('Epoch')
-plt.ylabel('Loss [Cross Entropy]')
-plt.legend()
-
-plt.show()
-
 # Save epochs and losses for later use
 data_exchange_path = create_default_data_exchange_path(exchange_file_name="previous_training_results_dataclass")
 previous_training_results = PreviousTrainingResults(epochs=epochs, losses=losses)
 previous_training_results.dump(data_exchange_path)
+
+# save the original logits, the logits is a list of probabilities
+logits_tf_original_path = create_default_data_exchange_path(exchange_file_name="logits_tf_original")
+logits_original = SerializableList(m.infer(x=train_images[:1])['logits'][0])
+logits_original.dump(logits_tf_original_path)
+
+###
+# Plot the training result
+###
+display_training_loss(lines=[PlotLineData(x_values=epochs, y_values=losses, label="Pre-training")], plt_func=plt.show)

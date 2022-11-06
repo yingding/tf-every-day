@@ -7,6 +7,10 @@ from utils.helper import (
     create_default_tflite_checkpoint_path,
     PreviousTrainingResults
 )
+from utils.visual import (
+    display_training_loss,
+    PlotLineData
+)
 
 """
 This retrain module simulate the tflite model training on android device with existing training data
@@ -60,16 +64,20 @@ for i in range(NUM_EPOCHS):
         print(f"Finished {i+1} epochs")
         print(f"   loss: {more_losses[i]:.3f}")
 
-plt.plot(epochs, losses, label='Pre-training')
-plt.plot(more_epochs, more_losses, label='On device')
-plt.ylim([0, max(plt.ylim())])
-plt.xlabel('Epoch')
-plt.ylabel('Loss [Cross Entropy]')
-plt.legend()
-plt.show()
-
+####
+# save retrained tflite model as tflite checkpoint
+####
 tflite_checkpoint_path = create_default_tflite_checkpoint_path("model.ckpt") 
 ## save the checkpoint
 save = interpreter.get_signature_runner("save")
 # checkpoint_path is defined in the custom_model.py , save mothod
-save(checkpoint_path=np.array(tflite_checkpoint_path), dtype=np.string_)
+save(checkpoint_path=np.array(tflite_checkpoint_path, dtype=np.string_))
+
+
+# show the retain result, the loss of On device continous
+display_training_loss(lines=[
+        PlotLineData(x_values=epochs, y_values=losses, label="Pre-training"),
+        PlotLineData(x_values=more_epochs, y_values=more_losses, label="On device"),
+    ],
+    plt_func=plt.show
+)

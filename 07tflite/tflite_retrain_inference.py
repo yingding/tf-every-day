@@ -1,6 +1,12 @@
+import os
 import tensorflow as tf
 import numpy as np
-from utils.helper import create_default_tflite_model_path
+from utils.helper import (
+    create_default_tflite_model_path, 
+    create_default_tflite_checkpoint_path
+)
+from utils.visual import compare_logits
+import matplotlib.pyplot as plt
 
 ## Load the data
 fashion_mnist = tf.keras.datasets.fashion_mnist
@@ -24,12 +30,22 @@ interpreter.allocate_tensors()
 
 # call the infer signatures of TensorFlow Lite
 infer = interpreter.get_signature_runner("infer")
+restore = interpreter.get_signature_runner("restore")
 
 # infer returns dict object with 'logits' as key and an array of logits
-logits_lite = infer(x=train_images[:1])['logits'][0]
+logits_lite_before = infer(x=train_images[:1])['logits'][0]
 
-print(logits_lite)
-print(f"predicted: {np.argmax(logits_lite)}")
+print(logits_lite_before)
+print(f"predicted: {np.argmax(logits_lite_before)}")
 print(f"groundtruth: {train_labels[:1][0]}")
 
+# Restore the trained weights from tflite model.ckpt, param checkpoint_path defined
+# custom_model.py restore signature
+tflite_checkpoint_path = create_default_tflite_checkpoint_path(check_point_name="model.ckpt")
+if os.path.exists(tflite_checkpoint_path):
+    # rettore the interpreter with a checkpoint
+    restore(checkpoint_path=np.array(tflite_checkpoint_path, dtype=np.string_))
 
+logits_lite_after = infer(x=train_images[:1])['logits'][0]
+
+compare_logits({'Before': logits_lite_before, 'After': logits_lite_after}, plt_func=plt.show)
