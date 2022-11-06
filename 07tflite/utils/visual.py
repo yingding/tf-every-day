@@ -45,3 +45,52 @@ def display_training_loss(lines: list[PlotLineData], xlabel: str="Epoch", ylabel
     if plt_func is not None:
         assert callable(getattr(plt, plt_func.__name__))
         plt_func()
+
+
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+# def plot_images(images, predictions, true_labels, title="", plt_func: callable = None):
+#     """
+#     https://matplotlib.org/3.6.2/gallery/subplots_axes_and_figures/figure_title.html
+#     """
+#     plt.figure(figsize=(10,10))
+    
+#     for i in range(25):
+#         plt.subplot(5,5,i+1)
+#         plt.xticks([])
+#         plt.yticks([])
+#         plt.grid(False)
+#         plt.imshow(images[i], cmap=plt.cm.binary)
+#         color = 'b' if predictions[i] == true_labels[i] else 'r'
+#         plt.xlabel(class_names[predictions[i]], color=color)
+#         if (i == 2): # the third plot at the first row, use the title
+#             plt.title(title)
+#     if plt_func is not None:
+#         assert callable(getattr(plt, plt_func.__name__))
+#         plt_func()
+
+
+def plot_images(images, predictions, true_labels, title: str, plt_func: callable = None):
+    """
+    https://matplotlib.org/3.6.2/gallery/subplots_axes_and_figures/figure_title.html
+    """
+    
+    fig, axs = plt.subplots(5, 5, figsize=(6, 6), sharex=True, sharey=True, constrained_layout=True)
+    fig.suptitle(title, fontsize=16)
+    for i, ax in enumerate(axs.flat):
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.grid(False)
+        ax.imshow(images[i], cmap=plt.cm.binary)
+        name = class_names[true_labels[i]]
+        if predictions[i] == true_labels[i]:
+            color = 'b'
+        else:
+            color = 'r'
+            name = f"t: {name} p: {class_names[predictions[i]]}"  
+        ax.set_xlabel(name, color=color)
+
+    if plt_func is not None:
+        assert callable(getattr(plt, plt_func.__name__))
+        plt_func()        

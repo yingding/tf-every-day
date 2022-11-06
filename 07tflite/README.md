@@ -1,10 +1,11 @@
 # About this repo
 
 Following the instruction of On-device Training to 
-* train a mnist model (train.py)
-* convert the trained model to tflite using compression (convert.py)
-* inference the compressed model (inference.py)
-* retrain tflite model on python, or android device (retrain.py)
+1. train a mnist model (tf_train.py)
+2. convert the trained tf model to tflite using compression (tflite_convert.py)
+3. inference the compressed tflite model (tflite_inference.py)
+4. retrain tflite model on python, or android device (tflite_retrain.py)
+5. inference the retained tflite model from checkpoint (tflite_retrain_inference.py)
 
 
 ## Reference:

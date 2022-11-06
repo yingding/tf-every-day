@@ -31,7 +31,8 @@ interpreter.allocate_tensors()
 # call the infer signatures of TensorFlow Lite
 infer = interpreter.get_signature_runner("infer")
 
-# infer returns dict object with 'logits' as key and an array of logits
+# infer returns dict object with 'logits' as key and an array of logits, 
+# which is defined in the 'infer' method of the custom_mdel.py
 logits_tf_lite = infer(x=train_images[:1])['logits'][0]
 # print(logits_tf_lite)
 print(f"predicted: {np.argmax(logits_tf_lite)}")

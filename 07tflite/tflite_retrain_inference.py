@@ -1,12 +1,16 @@
 import os
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 from utils.helper import (
     create_default_tflite_model_path, 
     create_default_tflite_checkpoint_path
 )
-from utils.visual import compare_logits
-import matplotlib.pyplot as plt
+from utils.visual import (
+    compare_logits,
+    plot_images
+)
+
 
 ## Load the data
 fashion_mnist = tf.keras.datasets.fashion_mnist
@@ -25,12 +29,12 @@ TFLITE_FILE_PATH = create_default_tflite_model_path("model.tflite")
 ## use model_content to pass the tflite_model binary
 ## interpreter = tf.lite.Interpreter(model_content==tflite_model)
 
-interpreter = tf.lite.Interpreter(model_path=TFLITE_FILE_PATH)
-interpreter.allocate_tensors()
+another_interpreter = tf.lite.Interpreter(model_path=TFLITE_FILE_PATH)
+another_interpreter.allocate_tensors()
 
 # call the infer signatures of TensorFlow Lite
-infer = interpreter.get_signature_runner("infer")
-restore = interpreter.get_signature_runner("restore")
+infer = another_interpreter.get_signature_runner("infer")
+restore = another_interpreter.get_signature_runner("restore")
 
 # infer returns dict object with 'logits' as key and an array of logits
 logits_lite_before = infer(x=train_images[:1])['logits'][0]
@@ -49,3 +53,32 @@ if os.path.exists(tflite_checkpoint_path):
 logits_lite_after = infer(x=train_images[:1])['logits'][0]
 
 compare_logits({'Before': logits_lite_before, 'After': logits_lite_after}, plt_func=plt.show)
+
+
+####
+# Influence all the test images
+####
+
+infer = another_interpreter.get_signature_runner("infer")
+# the return of infer signature is defined in the custom model with a dictionary output logits and output
+# the output is a softmax of the logits, to maximize the probability
+result = infer(x=test_images)
+
+#print(result.keys())
+#print(result["logits"])
+#print(result["output"])
+
+# argmax of the row vectors
+
+
+predictions = np.argmax(result['output'], axis=1)
+# test_labels = tf.keras.utils.to_categorical(test_labels)
+# true_labels = np.argmax(test_labels, axis=1)
+
+# the test_labels is a 1D array, without the transformation to logits
+plot_images(test_images, 
+    predictions=predictions, 
+    true_labels=test_labels,
+    title="tflite model performance, red: false prediction",
+    plt_func=plt.show
+)
