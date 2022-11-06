@@ -9,9 +9,12 @@ functions
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import os
-from custom_model import Model, IMG_SIZE
-from helper import create_default_checkpoint_subfolder
+from utils.custom_model import Model, IMG_SIZE
+from utils.helper import (
+    create_default_tf_checkpoint_subfolder, 
+    create_default_data_exchange_path,
+    PreviousTrainingResults
+)
 
 # print(f"Tensorflow verion: {tf.__version__}")
 print(f"Tensorflow verion: {tf.version.VERSION}")
@@ -54,8 +57,8 @@ for i in range(NUM_EPOCHS):
         print(f"Finished {i+1} epochs")
         print(f"   loss: {losses[i]:.3f}")
 
-# Save the trained weights to a checkpoint
-current_model_path = create_default_checkpoint_subfolder()
+# Save the trained weights to a checkpoint, 
+current_model_path = create_default_tf_checkpoint_subfolder()
 if current_model_path is not None:
     m.save(f"{current_model_path}/model.ckpt")
 
@@ -70,3 +73,8 @@ plt.ylabel('Loss [Cross Entropy]')
 plt.legend()
 
 plt.show()
+
+# Save epochs and losses for later use
+data_exchange_path = create_default_data_exchange_path(exchange_file_name="previous_training_results_dataclass")
+previous_training_results = PreviousTrainingResults(epochs=epochs, losses=losses)
+previous_training_results.dump(data_exchange_path)

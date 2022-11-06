@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from helper import create_default_tflite_model_path
+from utils.helper import create_default_tflite_model_path
 
 ## Load the data
 fashion_mnist = tf.keras.datasets.fashion_mnist

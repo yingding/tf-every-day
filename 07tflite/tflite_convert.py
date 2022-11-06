@@ -1,15 +1,15 @@
 import os
 import tensorflow as tf
-from custom_model import Model, IMG_SIZE
-from helper import (
-    create_default_checkpoint_subfolder, 
-    create_default_savedmodle_subfolder, 
+from utils.custom_model import Model, IMG_SIZE
+from utils.helper import (
+    create_default_tf_checkpoint_subfolder, 
+    create_default_tf_savedmodle_subfolder, 
     create_default_tflite_model_path
 )
 
 # Save the trained weights to a checkpoint
 
-current_model_path = create_default_checkpoint_subfolder()
+current_model_path = create_default_tf_checkpoint_subfolder()
 print(current_model_path)
 # Load the prevous saved checkpoint
 m = Model()
@@ -23,7 +23,7 @@ m.model.summary()
 # https://www.tensorflow.org/lite/examples/on_device_training/overview#convert_model_to_tensorflow_lite_format
 ###
 
-SAVED_MODEL_DIR = create_default_savedmodle_subfolder()
+SAVED_MODEL_DIR = create_default_tf_savedmodle_subfolder()
 
 print(f"{SAVED_MODEL_DIR}")
 if SAVED_MODEL_DIR is not None: 
