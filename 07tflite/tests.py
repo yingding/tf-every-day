@@ -20,12 +20,15 @@ a.dump(logits_path)
 b = SerializableList.load(logits_path)
 print(b)
 
-assert a.list == b.list
+assert a == b
 
 results_path = create_default_data_exchange_path('results')
 pre_results = PreviousTrainingResults([1, 2], [3, 3])
 
 pre_results.dump(results_path)
 my_results = PreviousTrainingResults.load(results_path)
-print(my_results.losses)
-print(my_results.epochs)
+
+assert pre_results == my_results
+
+print(pre_results)
+print(my_results)

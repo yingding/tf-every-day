@@ -10,12 +10,13 @@ https://www.datacamp.com/tutorial/docstrings-python
 """
 
 class PickleSerializable():
-    def dump(self, path: str, field: str=None):
+    def dump(self, path: str, field: str = None):
         # write a wb, binary model, no encoding argument encoding='UTF-8'
         with open(path, 'wb') as fp:
             if field is None:
                 pickle.dump(self, fp)
             else:
+                # __dict__ holds all the object variables
                 pickle.dump(self.__dict__[field], fp)    
 
     @staticmethod
@@ -28,26 +29,41 @@ class PickleSerializable():
     def load(clz, path: str):
         return clz._load(path)
 
-class SerializableList(PickleSerializable):
-    def __init__(self, l: list):
-        self.list = l
+# class SerializableList(PickleSerializable):
+#     def __init__(self, l: list):
+#         self.list = l
 
-    def __str__(self):
-        return self.list.__str__()
+#     def __str__(self):
+#         return self.list.__str__()
 
-    def dump(self, path: str, field: str="list"):
-        """
-        override the super dump method with the field to call the dump on field
-        """
-        super().dump(path=path, field=field)
+#     def dump(self, path: str, field: str="list"):
+#         """
+#         override the super dump method with the field to call the dump on field
+#         """
+#         super().dump(path=path, field=field)
     
-    @staticmethod
-    def _load(path: str) -> SerializableList:
-        """
-        Define the subclass static method so that the class method always calls the appropriate static method.
-        """
-        with open(path, 'rb') as fp:
-            return SerializableList(pickle.load(fp, encoding='UTF-8'))             
+#     @staticmethod
+#     def _load(path: str) -> SerializableList:
+#         """
+#         Define the subclass static method so that the class method always calls the appropriate static method.
+#         """
+#         with open(path, 'rb') as fp:
+#             return SerializableList(pickle.load(fp, encoding='UTF-8'))
+
+@dataclass
+class SerializableList(PickleSerializable):
+    list: list = field(default_factory=list)
+
+    @classmethod
+    def load(clz, path: str) -> SerializableList:
+        # override the classmethod of the PickleSerializable to get the type hint
+        # the clz._load() static method is called from the super class.
+        obj = clz._load(path)
+        # return SerializableList(list=obj.list)
+        # only extend method behavior 
+        # https://stackoverflow.com/questions/3464061/cast-base-class-to-derived-class-python-or-more-pythonic-way-of-extending-class
+        obj.__class__ = SerializableList
+        return obj
 
 
 @dataclass
@@ -64,7 +80,9 @@ class PreviousTrainingResults(PickleSerializable):
         # override the classmethod of the PickleSerializable to get the type hint
         # the clz._load() static method is called from the super class.
         obj = clz._load(path)
-        return PreviousTrainingResults(epochs=obj.epochs, losses=obj.losses)
+        obj.__class__ = PreviousTrainingResults
+        # return PreviousTrainingResults(epochs=obj.epochs, losses=obj.losses)
+        return obj
 
 
 default_tf_model_dir_path = "model/tf"
