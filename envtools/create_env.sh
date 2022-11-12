@@ -34,7 +34,7 @@ showhelp() {
     # "
 }
 
-showinfo() {
+show_venv_info() {
     echo "
     create a python venv
     version: $pythonversion
@@ -43,9 +43,19 @@ showinfo() {
     #$envpath/$envname
 }
 
+show_info_activation() {
+    echo "
+    use 
+        source $envpath/bin/activate
+    to activate your env
+    to deactivate with
+        deactivate    
+    "
+}
+
 # check whether user want to continue
 check_user_agree() {
-    showinfo
+    show_venv_info
     read -q "usercontinue?Enter y|Y to continue... 
     "
     # save user input to variable $usercontinue
@@ -91,7 +101,8 @@ create_env() {
                 eval "source $envpath/bin/activate";
                 eval "python3 -m pip install --upgrade pip";
                 eval "deactivate"
-                echo "$env deactivated"
+                echo "$envpath deactivated"
+                show_info_activation
             fi
             ;;
     esac
