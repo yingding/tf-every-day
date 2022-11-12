@@ -10,6 +10,43 @@ Following the instruction of On-device Training to
 5. inference the retained tflite model from checkpoint (tflite_retrain_inference.py)
 
 
+## Create a python venv with zsh automation script
+```console
+pushd envtools
+source create_env.sh -p ~/VENV/tfx3.9 -v 3.9
+popd
+```
+Note: 
+* at the time of writing, the `tfx==1.10.0` only support `python3.9`
+
+## Install packages
+```console
+cd 09tfx/
+source ~/VENV/tfx3.9/bin/activate
+python3 -m pip install -r requirements.txt  --no-cache-dir 
+```
+
+## Add a jupyter notebook kernel to VENV
+```console
+source ~/VENV/tfx3.9/bin/activate
+pyton3 -m pip install ipykernel
+ipython kernel install --user --name=tfx3.9
+```
+Note: 
+* restart the vs code, to select the venv as jupyter notebook kernel
+* name is `tfx3.9`, which is the venv name.
+
+Reference:
+* https://anbasile.github.io/posts/2017-06-25-jupyter-venv/
+
+## (optional) Uninstall all package
+Just in case things goes wrong, use the following cmd to uninstall all python packages.
+```console
+source ~/VENV/tfx3.9/bin/activate
+python3 -m pip freeze | xargs pip uninstall -y
+python3 -m pip list
+```
+
 ## Creating TFX pipeline
 
 
