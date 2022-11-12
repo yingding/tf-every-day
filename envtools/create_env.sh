@@ -48,7 +48,7 @@ check_user_agree() {
     showinfo
     read -q "usercontinue?Enter y|Y to continue... 
     "
-    # same to the variable usercontinue
+    # save user input to variable $usercontinue
     # https://stackoverflow.com/questions/15174121/how-can-i-prompt-for-yes-no-style-confirmation-in-a-zsh-script/15174634#15174634
     if [[ $usercontinue =~ ^(y|Y) ]]; then
         programcontinue=true

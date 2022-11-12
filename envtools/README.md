@@ -22,3 +22,10 @@ Use `rm` to remove the python venv at the path created.
 ```console
 rm -r <path/envname>
 ```
+
+## ZSH Reference
+* run zsh script: https://rowannicholls.github.io/bash/intro/passing_arguments.html
+* zsh condition: https://zsh.sourceforge.io/Doc/Release/Conditional-Expressions.html
+* save user zsh input to a variable $REPLY: https://stackoverflow.com/questions/15174121/how-can-i-prompt-for-yes-no-style-confirmation-in-a-zsh-script/15174634#15174634
+* zsh test file exists -f at the path location: https://stackoverflow.com/questions/7522712/how-can-i-check-if-a-command-exists-in-a-shell-script/7522866#7522866
+* zsh test variable length zero -z: https://rowannicholls.github.io/bash/intro/passing_arguments.html

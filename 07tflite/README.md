@@ -17,6 +17,6 @@ Following the instruction of On-device Training to
 # Future Works
 
 * call bash operator, to execute the python scripts in airflow: https://stackoverflow.com/questions/41730297/python-script-scheduling-in-airflow/41731397#41731397
-* Run multiple script as subprocesses: https://stackoverflow.com/questions/68980171/running-multiple-python-scripts-with-subprocess-python/68980201#68980201 
+* Run multiple script as subprocesses: https://stackoverflow.com/questions/68980171/running-multiple-python-scripts-with-subprocess-python/68980201#68980201  
 
 
