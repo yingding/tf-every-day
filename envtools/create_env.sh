@@ -70,10 +70,13 @@ check_user_agree() {
 
 ## generate cmd based on macos chip 
 generate_cmd_macos() {
+    # or x86_64
     if [[ $(uname -m) = "arm64" ]]; then
         myexec="/opt/homebrew/bin/python${pythonversion}"
     else
-        myexec="/usr/local/opt/python@${pythonversion}/bin/python3"
+        # /usr/local/bin/python3.9, is a simlink
+        myexec="/usr/local/bin/python{${pythonversion}}"
+        # myexec="/usr/local/opt/python@${pythonversion}/bin/python3"
     fi
     mycmd="$myexec -m venv $envpath"
 }
