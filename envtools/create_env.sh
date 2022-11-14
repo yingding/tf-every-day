@@ -75,7 +75,7 @@ generate_cmd_macos() {
         myexec="/opt/homebrew/bin/python${pythonversion}"
     else
         # /usr/local/bin/python3.9, is a simlink
-        myexec="/usr/local/bin/python{${pythonversion}}"
+        myexec="/usr/local/bin/python${pythonversion}"
         # myexec="/usr/local/opt/python@${pythonversion}/bin/python3"
     fi
     mycmd="$myexec -m venv $envpath"
