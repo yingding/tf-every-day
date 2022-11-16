@@ -138,3 +138,8 @@ dmypy.json
 mynotebooks/
 mynotebooks/**
 
+
+metadata/
+metadata/**
+pipelines/
+pipelines/**
