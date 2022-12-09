@@ -1,5 +1,4 @@
-ml-metadata
-# zenml==0.23.0
-# tensorflow-macos>=2.8.0
-# tensorflow-metal==0.6.0
-# pandas==1.5.2
+zenml==0.30.0rc3
+tensorflow-macos==2.10.0
+tensorflow-metal==0.6.0
+pandas==1.5.2
