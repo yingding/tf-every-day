@@ -4,10 +4,11 @@
 ## on Intel machine
 # tensorflow==2.10.0
 ## On apple silicon
+tfx==1.10.0
+tensorflow==2.9.2
 tensorflow-macos==2.9.2
 tensorflow-metal==0.6.0
 # tensorflow extened for building pipline
-tfx==1.10.0
 # ipython kernel, 
 # need `ipython kernel install --user --name=<venv_name>` and restart
 # ipykernel==6.17.1

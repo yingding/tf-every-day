@@ -4,4 +4,5 @@ metadata/**
 
 pipelines/
 pipelines/**
-
+serving_model/**
+my_pipeline.py
