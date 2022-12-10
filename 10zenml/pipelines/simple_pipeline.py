@@ -14,5 +14,6 @@ first_pipeline_instance = first_pipeline(
     step_2=svc_trainer()
 )
 
+# https://docs.zenml.io/starter-guide/pipelines
 my_run_name=f"my_simple_test_run_{get_local_time_str(target_tz_str='Europe/Berlin')}" 
-first_pipeline_instance.run(run_name=my_run_name)
+first_pipeline_instance.run(run_name=my_run_name, unlisted=True)
