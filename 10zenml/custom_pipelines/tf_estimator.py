@@ -24,10 +24,10 @@ def tf_gpu_trainer(
     # print(y_logits.shape)
 
     # https://stackoverflow.com/questions/29831489/convert-array-of-indices-to-one-hot-encoded-array-in-numpy/37323404#37323404
-    n_values = np.max(y_train) + 1
-    y_logits = np.eye(n_values)[y_train]
-    print(y_logits[0])
-    print(y_logits.shape)
+    # n_values = np.max(y_train) + 1
+    # y_logits = np.eye(n_values)[y_train]
+    # print(y_logits[0])
+    # print(y_logits.shape)
 
     model = tf.keras.Sequential([
          tf.keras.layers.Flatten(input_shape=(64,)),
@@ -36,6 +36,7 @@ def tf_gpu_trainer(
     ])
     batch_size = 1200
     epochs = 200
+
     # 1D Integer encoded target sparse_categorical_crossentropy as loss funciton
     # one-hot encoded with categorical_crossentropy
 
