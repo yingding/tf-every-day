@@ -9,7 +9,7 @@ from tf_estimator import tf_gpu_trainer
 def first_pipeline(step_1, step_2, step_3):
     X_train, X_test, y_train, y_test = step_1()
     step_2(X_train, y_train)
-    step_3(X_train, y_train)
+    step_3(X_train, y_train, X_test, y_test)
 
 first_pipeline_instance = first_pipeline(
     step_1=digits_data_loader(),

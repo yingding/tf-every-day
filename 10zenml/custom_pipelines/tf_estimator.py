@@ -3,18 +3,24 @@ import numpy as np
 import tensorflow as tf
 
 from zenml.steps import step
+from util import get_local_time_str
 from tensorflow.keras.optimizers.legacy import Adam
+
 
 @step
 def tf_gpu_trainer(
     X_train: np.ndarray,
     y_train: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
 )-> None: 
     """Train a tensorflow classfier."""
     print("tf_gpu_trainer")
     print(X_train.shape)
     print(y_train.shape)
-    print(np.unique(y_train))
+    print(X_test.shape)
+    print(y_test.shape)
+    # print(np.unique(y_train))
     if (tf.test.gpu_device_name()):
         print(f"{tf.test.gpu_device_name()}")
 
@@ -32,10 +38,21 @@ def tf_gpu_trainer(
     model = tf.keras.Sequential([
          tf.keras.layers.Flatten(input_shape=(64,)),
          tf.keras.layers.Dense(16, activation=tf.nn.relu),
+         tf.keras.layers.Dropout(0.2),
          tf.keras.layers.Dense(10, activation=tf.nn.softmax)
     ])
     batch_size = 1200
     epochs = 200
+    log_dir = "logs/fit/" + get_local_time_str(target_tz_str='Europe/Berlin')
+    # https://www.tensorflow.org/tensorboard/get_started
+
+
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+    # nbatch_progbar_callback = NBatchProgBarLogger(display_per_batches=10)
+    # nbatch_callback = NBatchLogger(display=10)
+    # progressbar_callback = tf.keras.callbacks.ProgbarLogger()
+    
+    
 
     # 1D Integer encoded target sparse_categorical_crossentropy as loss funciton
     # one-hot encoded with categorical_crossentropy
@@ -46,8 +63,13 @@ def tf_gpu_trainer(
     # https://developer.apple.com/forums/thread/721619
     model.compile(optimizer=Adam(), loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
 
-    model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs)
+    model.fit(x=X_train, y=y_train, batch_size=batch_size, epochs=epochs,
+        validation_data=(X_test, y_test),
+        callbacks=[tensorboard_callback]
+    )
     print(model.summary())
+
+    # https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/
     
 
 

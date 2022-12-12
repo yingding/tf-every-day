@@ -143,3 +143,6 @@ metadata/
 metadata/**
 pipelines/
 pipelines/**
+
+logs/**
+logs/fit/**
