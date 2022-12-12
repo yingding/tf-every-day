@@ -11,6 +11,9 @@ def svc_trainer(
     y_train: np.ndarray,
 ) -> ClassifierMixin: 
     """Train a sklearn NuSVC classfier."""
+    print("svc_trainer")
+    print(X_train.shape)
+    print(y_train.shape)
     model = NuSVC(gamma=0.001)
     model.fit(X_train, y_train)
     return model
