@@ -1,4 +1,4 @@
-### svc support vector classifier
+### simple MLP classifier
 import numpy as np
 import tensorflow as tf
 
