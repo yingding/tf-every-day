@@ -1,7 +1,5 @@
 zenml==0.30.0
 tensorflow-macos==2.11.0
 tensorflow-metal==0.7.0
-# 2.10.0 with metal 0.6.0
-# 2.11.0 with metal 0.7.0
 pandas==1.5.2
 scikit-learn==1.2.0

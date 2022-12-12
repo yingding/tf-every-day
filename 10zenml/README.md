@@ -2,7 +2,7 @@
 
 ## Install packages 
 ```
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt --no-cache
 ```
 ## Remove all package from venv
 ```
