@@ -1,7 +1,8 @@
 ## pip install --upgrade pip
-tensorflow-io[tensorflow]
+# tensorflow-io[tensorflow]
 ## on Intel machine
 # tensorflow==2.10.0
 ## On apple silicon
-# tensorflow-macos==2.10.0
-# tensorflow-metal==0.6.0
+tensorflow-macos==2.11.0
+tensorflow-metal==0.7.0
+# tensorflow-io==0.28.0
