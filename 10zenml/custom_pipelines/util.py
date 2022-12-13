@@ -15,7 +15,7 @@ def get_local_time_str(target_tz_str: str = "Europe/Berlin", format_str: str = "
     return datetime.strftime(target_dt, format_str)
 
 
-class NEpochProgbarLogger(tensorflow.keras.callbacks.ProgbarLogger):
+class MultiEpochProgbarLogger(tensorflow.keras.callbacks.ProgbarLogger):
     def __init__(self, count_mode='samples', stateful_metrics=None, display_per_epoch=1000, verbose=1):
         super().__init__(count_mode, stateful_metrics)
         self.display_per_epochs = display_per_epoch
@@ -23,7 +23,7 @@ class NEpochProgbarLogger(tensorflow.keras.callbacks.ProgbarLogger):
 
     def on_epoch_end(self, epoch, logs=None):
         if epoch % self.display_per_epochs == 0:
-            super().on
+            super().on_epoch_end(epoch, logs)
 
 
 # class NBatchLogger(Callback):

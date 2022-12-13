@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 from zenml.steps import step
-from util import get_local_time_str
+from util import get_local_time_str, MultiEpochProgbarLogger
 from tensorflow.keras.optimizers.legacy import Adam
 
 
@@ -38,11 +38,11 @@ def tf_gpu_trainer(
     model = tf.keras.Sequential([
          tf.keras.layers.Flatten(input_shape=(64,)),
          tf.keras.layers.Dense(16, activation=tf.nn.relu),
-         tf.keras.layers.Dropout(0.2),
+         tf.keras.layers.Dropout(0.1),
          tf.keras.layers.Dense(10, activation=tf.nn.softmax)
     ])
     batch_size = 1200
-    epochs = 200
+    epochs = 250
     log_dir = "logs/fit/" + get_local_time_str(target_tz_str='Europe/Berlin')
     # https://www.tensorflow.org/tensorboard/get_started
 
@@ -51,6 +51,7 @@ def tf_gpu_trainer(
     # nbatch_progbar_callback = NBatchProgBarLogger(display_per_batches=10)
     # nbatch_callback = NBatchLogger(display=10)
     # progressbar_callback = tf.keras.callbacks.ProgbarLogger()
+    multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps",display_per_epoch=20)
     
     
 
@@ -63,9 +64,9 @@ def tf_gpu_trainer(
     # https://developer.apple.com/forums/thread/721619
     model.compile(optimizer=Adam(), loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
 
-    model.fit(x=X_train, y=y_train, batch_size=batch_size, epochs=epochs,
+    model.fit(x=X_train, y=y_train, batch_size=batch_size, epochs=epochs, verbose=1,
         validation_data=(X_test, y_test),
-        callbacks=[tensorboard_callback]
+        callbacks=[multiEpochProgbarLogger, tensorboard_callback]
     )
     print(model.summary())
 
