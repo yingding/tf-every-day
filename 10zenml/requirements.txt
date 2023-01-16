@@ -1,4 +1,4 @@
-zenml==0.30.0
+zenml==0.31.1
 tensorflow-macos==2.11.0
 tensorflow-metal==0.7.0
 pandas==1.5.2

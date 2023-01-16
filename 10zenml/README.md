@@ -14,11 +14,29 @@ python3 -m pip list
 ```
 
 ## Start tensorboard
-use a local relative logdir `./logs/fit`
+After the training of tensorflow model, log folder will be generated at `<project_root>/logs/fit`
+
+To use a this relative logdir `./logs/fit` with tensorboard
 ```python
+cd <project_root>
 # tensorboard --logdir path_to_current_dir
 tensorboard --logdir ./logs/fit
 ```
+
+You will see in the console the following outputs:
+```console
+tensorboard --logdir ./logs/fit
+Serving TensorBoard on localhost; to expose to the network, use a proxy or pass --bind_all
+TensorBoard 2.11.0 at http://localhost:6006/ (Press CTRL+C to quit)
+```
+
+Open the browser and access tensorboard from the URL as prompt `http://localhost:6006/`
+
+### To see the evaluation of acc vs iteration
+1. close the density groups
+2. open `evaluation_accuracy_vs_iterations`
+3. open `evaluation_loss_vs_iterations`
+
 ## Issue
 ### Zenml tfx dependency
 zenml is depending on ml-metadata, and which has no aarch64 package
