@@ -5,3 +5,4 @@ SHAP trains an additional model based on the observation of custom model behavio
 Reference:
 * feature importance post-hoc model agnostic explanation with SHAP: https://shap.readthedocs.io/en/latest/
 * SHAP examples: https://github.com/slundberg/shap
+* Intro into SHapley Additive exPlainations: https://christophm.github.io/interpretable-ml-book/shap.html
