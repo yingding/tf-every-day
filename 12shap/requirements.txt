@@ -2,3 +2,7 @@ shap==0.41.0
 zenml==0.34.0
 scikit-learn==1.2.1
 pandas==1.5.3
+xgboost==1.7.4
+# allows zenml to store pandas dataframe as parquet instead of csv
+pyarrow==11.0.0
+matplotlib==3.7.0
