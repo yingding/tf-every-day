@@ -1,5 +1,5 @@
-zenml==0.31.1
+zenml==0.34.0
 tensorflow-macos==2.11.0
-tensorflow-metal==0.7.0
-pandas==1.5.2
-scikit-learn==1.2.0
+tensorflow-metal==0.7.1
+pandas==1.5.3
+scikit-learn==1.2.1
