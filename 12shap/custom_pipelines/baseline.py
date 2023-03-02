@@ -38,8 +38,12 @@ def shap_explainer(X_train: DataFrame, model: XGBRegressor) -> None:
     import shap
     explainer = shap.Explainer(model)
     shap_values = explainer(X_train)
+    # use matplotlib=True to show force plot with matplotlib
+    # and save plot: https://github.com/slundberg/shap/issues/27#issuecomment-567360220
+    # shap.plots.force(shap_values[0], matplotlib=True)
+    shap.summary_plot(shap_values, X_train)
+
     # shap.plots.waterfall(shap_values[0])
-    # shap.plots.force(shap_values)
     print(type(shap_values))
     print(shap_values[0, "bmi"])
     shap.plots.scatter(shap_values[:,"bmi"], color=shap_values)
