@@ -23,13 +23,21 @@ Note:
 ```console
 cd 09tfx/
 source ~/VENV/tfx3.9/bin/activate
+
 python3 -m pip install -r requirements.txt  --no-cache-dir 
 ```
 
 ## Add a jupyter notebook kernel to VENV
 ```console
 source ~/VENV/tfx3.9/bin/activate
+python3 -m pip install --upgrade pip
 python3 -m pip install ipykernel
+deactivate
+```
+
+We need to reactivate the venv so that the ipython kernel is available after installation.
+```
+source ~/VENV/tfx3.9/bin/activate
 ipython kernel install --user --name=tfx3.9
 ```
 Note: 
