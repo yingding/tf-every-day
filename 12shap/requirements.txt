@@ -1,5 +1,5 @@
 shap==0.41.0
-zenml==0.34.0
+zenml==0.35.1 # 0.34.0
 scikit-learn==1.2.1
 pandas==1.5.3
 xgboost==1.7.4
