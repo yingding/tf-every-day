@@ -4,8 +4,11 @@ import tensorflow as tf
 
 from zenml.steps import step
 from util import get_local_time_str, MultiEpochProgbarLogger
-from tensorflow.keras.optimizers.legacy import Adam
 
+from tensorflow.keras.optimizers.legacy import Adam
+# Work around for no XLA path support with using Adam form legacy,
+# instead of the default tf.optimizers.Adam()
+# https://developer.apple.com/forums/thread/721619
 
 @step
 def tf_gpu_trainer(
