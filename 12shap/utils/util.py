@@ -8,6 +8,48 @@ from numpy import ndarray
 import seaborn as sns
 from matplotlib import pyplot as plt
 
+"""
+COLOR SETTING
+
+%matplotlib inline
+
+THEME_STYLE = "darkgrid"
+THEME_PALETT = "pastel"
+
+sns.set_theme(palette="pastel")
+sns.set(style="ticks", context="talk")
+plt.style.use("dark_background")
+
+https://seaborn.pydata.org/generated/seaborn.set_theme.html
+https://matplotlib.org/stable/tutorials/colors/colormaps.html
+https://stackoverflow.com/questions/48958208/how-do-you-change-the-default-font-color-for-all-text-in-matplotlib/48958263#48958263
+
+THEME_PALETT = "Dark2"
+THEME_STYLE = "ticks"# "darkgrid"
+BG_COLOR= "black" # "darkslategray" # "midnightblue"# "dimgray" #"black"
+# BG_COLOR="grey"
+TEXT_COLOR= "snow" #"lightgrey"
+sns.set_theme(style=THEME_STYLE, palette=THEME_PALETT)
+sns.set(rc={'axes.facecolor': BG_COLOR, 'figure.facecolor':BG_COLOR,
+            'text.color': TEXT_COLOR, 'axes.labelcolor': TEXT_COLOR, 'xtick.color': TEXT_COLOR, 'ytick.color': TEXT_COLOR })
+"""
+
+"""
+https://stackoverflow.com/questions/25238442/setting-plot-background-colour-in-seaborn
+
+import seaborn
+theme_style = "white"
+seaborn.set_theme(style=theme_style)
+# bg_color="back"
+# seaborn.set(rc={'axes.facecolor': bg_color, 'figure.facecolor':bg_color})
+
+
+matplotlab dark color https://gist.github.com/mwaskom/7be0963cc57f6c89f7b2
+
+temporay styling: https://matplotlib.org/stable/tutorials/introductory/customizing.html#temporary-styling
+"""
+
+
 def current_dir():
     """get the absolute path of the current file directory"""
     current_path = os.path.dirname(os.path.dirname(__file__))
@@ -84,7 +126,7 @@ class KaggleData:
             all_dist_df = pd.concat([all_dist_df, df.assign(data_partition=location)])
         return all_dist_df
 
-    def boxplot_dist(self, features=[], orient="v", marker="x", legend="lower right"):
+    def boxplot_dist(self, features=[], orient="v", marker="x", legend="lower right", dark_mode=True):
         """
         @param legend: 
             upper right
@@ -97,7 +139,29 @@ class KaggleData:
             lower center
             upper center
             center
+        @param edgecolor: matplotlib color, css colors https://matplotlib.org/stable/gallery/color/named_colors.html    
         """
+        if dark_mode:
+            edge_color = "lightgray" # lightgray, snow # for box
+            # https://matplotlib.org/stable/tutorials/colors/colormaps.html
+            # seaborn matplotlib color palett: https://seaborn.pydata.org/tutorial/color_palettes.html
+            palett = "bright" # deep, muted, pastel, bright, dark, and colorblind
+            text_color= "snow" #"lightgrey"
+            bg_color= "black"
+            # theme_palett = "Dark2"
+            # theme_style = "darkgrid" # "ticks"
+            # bg_color= "black" # "darkslategray" # "midnightblue"# "dimgray" #"black", "grey"
+            # text_color= "snow" #"lightgrey"
+            # sns.set_theme(style=theme_style, palette=theme_palett)
+            # sns.set(rc={'axes.facecolor': bg_color, 'figure.facecolor':bg_color,
+            #             'text.color': text_color, 'axes.labelcolor': text_color, 
+            #             'xtick.color': text_color, 'ytick.color': text_color })
+        else:
+            edge_color = "black"
+            text_color= "black"
+            bg_color= "white"
+            palett =  "pastel" # bright        
+
         all_df = self._all_data_sets()
         all_num_cols = all_df.describe().columns.to_list() + ["data_partition"]
         if features is None or len(features)==0:
@@ -118,11 +182,39 @@ class KaggleData:
         # the pd.melt create the value and features column, where feature column encode all the feature   
         mdf = pd.melt(all_df[cols], id_vars=['data_partition'], var_name=["numerical_features"])
         """boxplot all numerical features for the different datasets 'train', 'test', 'total' """
-        match orient:
-            case "h": 
-                ax = sns.boxplot(y="data_partition", x="value", hue="numerical_features", data=mdf, flierprops={"marker": marker})
-            case "v", _:
-                ax = sns.boxplot(x="data_partition", y="value", hue="numerical_features", data=mdf, flierprops={"marker": marker})    
+
+        # make the edge of boxes white
+        # https://stackoverflow.com/questions/43434020/black-and-white-boxplots-in-seaborn/65529178#65529178
+        # 
+        PROPS = {
+            #'boxprops':{'facecolor':'none', 'edgecolor':'red'},
+            'boxprops':{'edgecolor':edge_color},
+            'medianprops':{'color':edge_color},
+            'whiskerprops':{'color':edge_color},
+            'capprops':{'color':edge_color},
+            'flierprops' :{"marker" : marker, "markerfacecolor":edge_color, "markeredgecolor": edge_color},
+            'palette': palett
+        }
+
+        def local_plot(orient: str, df:DataFrame, PROPS):
+            match orient:
+                case "h": 
+                    # ax = sns.boxplot(y="data_partition", x="value", hue="numerical_features", data=mdf, flierprops={"marker": marker}, **PROPS)
+                    ax = sns.boxplot(y="data_partition", x="value", hue="numerical_features", data=df, **PROPS)
+                case "v", _:
+                    # ax = sns.boxplot(x="data_partition", y="value", hue="numerical_features", data=mdf, flierprops={"marker": marker, }, **PROPS)
+                    ax = sns.boxplot(x="data_partition", y="value", hue="numerical_features", data=df, **PROPS)
+
+
+        
+        if dark_mode:
+            with plt.style.context('dark_background'):
+                sns.set(rc={'axes.facecolor': bg_color, 'figure.facecolor':bg_color,
+                    'text.color': text_color, 'axes.labelcolor': text_color, 
+                    'xtick.color': text_color, 'ytick.color': text_color })
+                local_plot(orient=orient, df=mdf, PROPS=PROPS)
+        else:     
+            local_plot(orient=orient, df=mdf, PROPS=PROPS)
         plt.legend(loc=legend)
         plt.show()        
             
