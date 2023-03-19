@@ -156,12 +156,13 @@ def profile(df: DataFrame, title: str = "") -> None:
     shape = df.shape
     stats_df = df.describe()
     numerical_features = stats_df.columns.to_list()
+    na_num_columns = na_columns(df=df, filter_cols=numerical_features)
     count_na_raw_num_features = count_na_row(df, numerical_features)
     print(
         f"{title}\n" + 
         f"Shape: {shape}\n" + 
         f"Numerical Columns: {numerical_features}\n"+
-        f"No. of NaN in Num. Cols: {count_na_raw_num_features}\n"
+        f"Num. Columns {na_num_columns} has total no. of NaN : {count_na_raw_num_features}\n"
         f"{stats_df}"        
     )
 
