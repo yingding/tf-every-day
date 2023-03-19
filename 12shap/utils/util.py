@@ -5,6 +5,7 @@ import pandas as pd
 from pandas import DataFrame, Series
 from typing import Tuple
 from numpy import ndarray
+from collections.abc import Iterable
 import seaborn as sns
 from matplotlib import pyplot as plt
 
@@ -67,6 +68,138 @@ def assign_const_col(df: DataFrame, col_name: str, value: any) -> DataFrame:
     # https://stackoverflow.com/questions/29517072/add-column-to-dataframe-with-constant-value
     return df.assign(col_name=value)
 
+def na_columns_mask(df: DataFrame) -> Series:
+    """
+    this method returns column mask with column contains NA values marked as True
+    Reference:
+    https://stackoverflow.com/questions/36226083/how-to-find-which-columns-contain-any-nan-value-in-pandas-dataframe/36226137#36226137
+
+    get the colume with values
+
+    df.loc[:, na_columns_mask(df)]
+    
+    get the column names with mask
+    df.columns[na_columns_mask(df)].to_list()
+    """
+    # DataFrame.isna() returns a Boolean DataFrame with very cell value indicates if it is a NA value
+    # The any(axis=0) operator reduce the column series to a true or false value, if there is any true NA value   
+    return df.isna().any(axis=0)
+
+def na_columns(df: DataFrame, filter_cols=[]) -> list:
+    """
+    this method returns columns containing NaN values from the given DataFrame, 
+    the returned columns with NaN values can be filtered by the filter_cols variable.
+    @param df: DataFrame
+    @param filter_cols: filter list for the returned column list contains NaN values
+    return column list
+    """
+    # get the Index of columns containing NaN values.
+    index_cols = df.columns[na_columns_mask(df)]
+    if filter_cols is None or len(filter_cols) == 0:
+        return index_cols.to_list()
+    else:
+        # filter the NaN column index.
+        return index_cols[index_cols.isin(filter_cols)].to_list()
+
+def mean_values(df: DataFrame, cols: Iterable, value_func: callable=lambda x: x) -> dict:
+    """
+    this method calculated the mean value of all numerical columns from the given DataFrame and 
+    return these mean values with the appropriate numerical column name as key in a dict obj
+
+    Examples: 
+    cols = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare']
+    dict = mean_values(df, cols)
+
+    > dict = {
+        'Pclass': 2.294881588999236,
+        'Age': 29.881137667304014,
+        'SibSp': 0.4988540870893812,
+        'Parch': 0.3850267379679144,
+        'Fare': 33.29547928134557
+      }
+
+    @param df: DataFrame
+    @param cols: cols which shall be included
+    @param value_func: a function which can be used to tranform the mean values, e.g. round 
+    """
+    # cols.remove('PassengerId')
+    stats_df = df.describe()
+    feature_mean_series = stats_df.loc['mean', cols]
+
+    return dict(map(
+        value_func,
+        zip(feature_mean_series.index, 
+            feature_mean_series.values) 
+        ))
+
+def fill_values(df: DataFrame, values: dict) -> DataFrame:
+    # fill with multiple column values https://pandas.pydata.org/docs/reference/api/pandas.Series.fillna.html
+    new_df = df.fillna(value=values)
+    return new_df if new_df is not None else df
+
+# def fill_values(df: DataFrame, cols: Iterable, fill_values: Iterable) -> DataFrame:   
+#     assert len(cols) == len(fill_values), f"cols and fill_values must has the same length"
+#     values = dict(zip(cols, fill_values))
+#     return fill_values(df=df, values=values)
+
+
+def count_na_row(df: DataFrame, cols: Iterable = []) -> int:
+    if cols is None or len(cols) == 0:
+        cols_selected = df.columns
+    else:
+        cols_selected = cols
+    # any(axis) count if there is any true isna values in a row         
+    return df[cols_selected].isna().any(axis=1).value_counts().get(key=True)
+
+def profile(df: DataFrame, title: str = "") -> None:
+    """Profile the current dataframe"""
+    shape = df.shape
+    stats_df = df.describe()
+    numerical_features = stats_df.columns.to_list()
+    count_na_raw_num_features = count_na_row(df, numerical_features)
+    print(
+        f"{title}\n" + 
+        f"Shape: {shape}\n" + 
+        f"Numerical Columns: {numerical_features}\n"+
+        f"No. of NaN in Num. Cols: {count_na_raw_num_features}\n"
+        f"{stats_df}"        
+    )
+
+
+def feature_correlation(df: DataFrame, label: str, threshold: float) -> Tuple[DataFrame, DataFrame]:
+    """this method returns correlation dataframe , and high correlation features to the label"""
+    corr_df = df.corr(numeric_only=True)
+    high_corr_feature_df = corr_df[(corr_df[label] > threshold) | (corr_df[label] < -threshold)].loc[:, [label]]
+    return corr_df, high_corr_feature_df
+
+
+# def truncate(f:float, n: int) -> str:
+#     """
+#     Truncates/pads a float f to n decimal places without rounding
+#     @param f: float
+#     @param n: number of decimals to keep
+#     """
+#     # https://stackoverflow.com/questions/783897/how-to-truncate-float-values/783927#783927
+#     s = '%.12f' % f
+#     i, p, d = s.partition('.')
+#     return '.'.join([i, (d+'0'*n)[:n]])
+
+
+def fill_missing_values_with_mean(df: DataFrame, pop_df: DataFrame, filter_cols: list, filter_func: callable) -> Tuple[DataFrame, dict]:
+    """
+    @param df: DataFrame containing missing values to be filled
+    @param filter_cols: filter the columns need to fill the NaN missing value
+    @param fiter_func: used to manipulate the inputation values which is function of tuple lambda x,y -> x,y
+    @param pop_df: the population dataframe used to calculate the mean values.
+    """
+    na_cols = na_columns(df, filter_cols)
+    mean_values_dict = mean_values(pop_df, na_cols, value_func=filter_func)
+    return fill_values(df, values=mean_values_dict), mean_values_dict
+
+# def one_hot(df: DataFrame, cols:list) -> DataFrame:
+#     return pd.get_dummies(df, prefix=[cols], columns=cols)
+
+
 @dataclass
 class KaggleData:
     train_path: str = ""
@@ -84,6 +217,10 @@ class KaggleData:
         # https://stackoverflow.com/questions/42360956/what-is-the-most-pythonic-way-to-check-if-multiple-variables-are-not-none
         return None not in map(lambda x: x.empty, (self.train_X, self.train_y, self.test_X) )
     
+    def _one_hot(self, cols:list):
+        self.train_X = pd.get_dummies(self.train_X, prefix=cols, columns=cols)
+        self.test_X = pd.get_dummies(self.test_X, prefix=cols, columns=cols)
+
     def _train_test_X(self):
         return pd.concat([self.train_X, self.test_X], ignore_index=True)
 
@@ -96,7 +233,7 @@ class KaggleData:
             test_X_df = pd.DataFrame() 
         return train_X_y_df, test_X_df
     
-    def load(self) -> Tuple[DataFrame, DataFrame, Series]:
+    def load(self, one_hot_cols:Iterable = None) -> Tuple[DataFrame, DataFrame, Series]:
         train_X_y_df, test_X_df = self._load()
         # train_X_y_df and test_X_df may have different size of column,
         # thus the mask must be calculated separately
@@ -106,12 +243,16 @@ class KaggleData:
         self.train_X = train_X_y_df.loc[:, train_column_mask]
         self.train_y = train_X_y_df[self.label_col]
         self.test_X = test_X_df.loc[:, test_column_mask]
+        
+        if one_hot_cols is not None and len(one_hot_cols) != 0:
+            self._one_hot(one_hot_cols)
+            
         return self.train_X, self.test_X, self.train_y
     
-    def load_all(self) -> DataFrame:
+    def load_all(self, one_hot_cols: Iterable = None) -> DataFrame:
         # testing all the cached dataframe and series shall not be empty
         if self._cache_empty():
-            _, _, _ = self.load()
+            _, _, _ = self.load(one_hot_cols)
         return self._train_test_X()
     
     def _all_data_sets(self) -> DataFrame:
