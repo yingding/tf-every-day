@@ -152,3 +152,6 @@ logs/fit/**
 # **/logs/**
 /**/logs/**
 /**/logs/fit/**
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
