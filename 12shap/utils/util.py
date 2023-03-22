@@ -8,6 +8,7 @@ from numpy import ndarray
 from collections.abc import Iterable
 import seaborn as sns
 from matplotlib import pyplot as plt
+from sklearn.model_selection import train_test_split
 
 """
 COLOR SETTING
@@ -255,6 +256,11 @@ class KaggleData:
         if self._cache_empty():
             _, _, _ = self.load(one_hot_cols)
         return self._train_test_X()
+    
+    @staticmethod
+    def split(X: DataFrame, y: Series, test_size=0.2, random_state=10) -> Tuple[DataFrame, DataFrame, Series, Series]:
+        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=test_size, random_state=random_state)
+        return X_train, X_valid, y_train, y_valid
     
     def _all_data_sets(self) -> DataFrame:
         if self._cache_empty():
