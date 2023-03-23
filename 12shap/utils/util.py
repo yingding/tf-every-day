@@ -262,6 +262,21 @@ class KaggleData:
         X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=test_size, random_state=random_state)
         return X_train, X_valid, y_train, y_valid
     
+    
+    @staticmethod
+    def exclude_cols(df:DataFrame, cols: list = []) -> DataFrame:
+        cols_mask: ndarray = ~df.columns.isin(cols)
+        return df.loc[:, cols_mask]
+    
+
+    @staticmethod
+    def select_cols(df:DataFrame, cols: list = []) -> DataFrame:
+        if cols is None or len(cols) == 0:
+            return df
+        else: 
+            return df[cols]
+
+    
     def _all_data_sets(self) -> DataFrame:
         if self._cache_empty():
             _, _, _ = self.load()
