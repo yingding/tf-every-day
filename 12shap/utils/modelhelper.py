@@ -67,19 +67,23 @@ class ModelExplainer(ColorPalette):
         self.shap_values = self.explainer(self.data)              
     
 
-    def summary_plot(self, plot_type='dot') -> None:
+    def summary_plot(self) -> None:
         """
         plot_type: dot, bar or violin
         https://shap-lrjball.readthedocs.io/en/latest/generated/shap.summary_plot.html
         """
         def inner():
-            text_color= "snow" #"lightgrey"
-            # text_color= "black"
+            if self.dark_mode:
+                text_color= "snow" #"lightgrey"
+            else:
+                text_color= "black"
             rc={'text.color': text_color, 'axes.labelcolor': text_color, 
                     'xtick.color': text_color, 'ytick.color': text_color }     
             with plt.rc_context(rc=rc):
+                print(text_color)
                 print(self._cmp())
-                shap.summary_plot(self.shap_values, self.data, plot_type=plot_type, cmap=self._cmp())
+                # not using the plot_type since default for single and multi output are choosen automatically
+                shap.summary_plot(self.shap_values, self.data, cmap=self._cmp())
         return self._set_plot_style(inner)
 
 
@@ -168,19 +172,29 @@ class ModelExplainer(ColorPalette):
     
 
 class ModelKernelExplainer(ModelExplainer):
-    def __init__(self, model: Any, train_data: DataFrame, inference_data: DataFrame,
+    def __init__(self, model: Any, train_data: DataFrame, inference_data: DataFrame,                
                  dark_mode: bool = False, 
-                 # nsamples: int=50
+                 link="identity",
+                 labels=[0,1], # int class label
                  ):
+        """
+        link function is set to be "identity" for the random model particular case, while using "l"
+        """
         # super() is calling the immediate base class, so we need to call the parent parent class with name
         ColorPalette.__init__(self, dark_mode=dark_mode)
         
         self.data = inference_data
+        self.link = link
+        self.labels = labels
         # self.explainer = shap.Explainer(model, algorithm=algorithm)
 
         # explainer is a callable object for tree models
         """ Notice: it tooks time to train the KernelExpainer, not the calculation of shap_values """
-        self.explainer = shap.KernelExplainer(model.predict_proba, train_data.to_numpy(), link="logit")
+        # switched to kernel method instead of auto
+        self.explainer = shap.KernelExplainer(
+            model=model.predict_proba, data=train_data.to_numpy(), link=link,
+            # algorithm="kernel"
+            )
 
         # KernelExplainer for any model, model agnostic 
         # https://github.com/slundberg/shap#model-agnostic-example-with-kernelexplainer-explains-any-function
@@ -188,16 +202,43 @@ class ModelKernelExplainer(ModelExplainer):
 
         # this call may took some time
         # self.nsamples = min(nsamples, self.data.shape[0])
-        """nsamples are the batch size"""
-        self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples=50)
-        # self.shap_values = self.explainer.shap_values(self.data, nsamples=self.data.shape[0])
+        """nsamples are the batch size
+        https://shap-lrjball.readthedocs.io/en/latest/generated/shap.KernelExplainer.html#shap.KernelExplainer.shap_values
+        """
+        # self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples=50)
+        self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples="auto")
 
     def force_plot(self, idx: int) -> None:
         # super().force_plot(idx=idx, use_expected_value=True)
-        self._set_plot_style(lambda:
-             # need to call shap.inijs()                       
-             shap.plots.force(self.explainer.expected_value, self.shap_values[idx], self.data.iloc[idx], link="logit")
-        )
+        # print(self.label)
+        # print(idx)
+        # print(self.link)
+        for label in self.labels:
+            shap.plots.force(self.explainer.expected_value[label], 
+                             self.shap_values[label][idx], self.data.iloc[idx], link=self.link, matplotlib=True)
+        
+        
+        #shap.plots.force(explainer.explainer.expected_value[1], 
+        #         explainer.shap_values[1][0], explainer.data.iloc[0], link="identity")
+
+        # output for all instance                       
+        #  shap.plots.force(self.explainer.expected_value[self.label], 
+        #                   self.shap_values[self.label][idx], self.data.iloc[idx], link=self.link) 
+
+
+    def waterfall_plot(self, idx: int = 0) -> None:
+        # since the model.predict_proba is used, so that logits are passed and shap_values returns a list for all the logits
+        # self._set_plot_style(lambda: 
+        #        shap.plots.waterfall(self.shap_values[self.label][idx])               
+        # )
+        
+        # no waterfall for kernelExplainer, since the shap_values are list or array and not Explainer
+        pass
+    
+
+    def beeswarm_plot(self) -> None:
+        """override the ModelExplainer, no beeswarm for kernelExplainer"""
+        pass 
                            
 
 class ModelValidator(ColorPalette):
