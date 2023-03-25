@@ -21,8 +21,8 @@ source ~/VENV/shap3.10/bin/activate
 ipython kernel install --user --name=shap3.10
 ```
 Note: 
-* restart the vs code, to select the venv as jupyter notebook kernel
-* name is `tfx3.9`, which is the venv name.
+* restart the vs code, to select the venv as jupyter notebook kernel 
+* name is `shap3.10`, which is the venv name.
 
 Reference:
 * https://anbasile.github.io/posts/2017-06-25-jupyter-venv/

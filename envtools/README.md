@@ -1,4 +1,4 @@
-# About this project
+cre # About this project
 
 Provides zsh scripts to setup a python venv on your macbook quickly
 
@@ -9,7 +9,7 @@ Provides zsh scripts to setup a python venv on your macbook quickly
 ## envtool
 Constains
 - call `source shell_info.sh` to determine whether your have a zsh activated on your macosx
-- call `create_env.sh -p <path/envname> -v <3.8|3.9|3.10>` to create a python venv using python package from home brew
+- call `source create_env.sh -p <path/envname> -v <3.8|3.9|3.10>` to create a python venv using python package from home brew
 
 ## example call:
 ```console

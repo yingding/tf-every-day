@@ -34,7 +34,7 @@ class ColorPalette():
     """
     def __init__(self, dark_mode: bool=False):
         self.dark_cmp = "plasma" # "twilight" 
-        self.light_cmp = "inferno" # "Paired" is not a continues map, bad for shap summary plot
+        self.light_cmp = "viridis" # "inferno" # "Paired" is not a continues map, bad for shap summary plot
         self.dark_mode = dark_mode
 
 
