@@ -38,13 +38,17 @@ class ColorPalette():
         self.dark_mode = dark_mode
 
 
-    def _set_plot_style(self, func: Callable):
+    def _set_plot_style(self, func: Callable, rc=None):
         if self.dark_mode:
-            with plt.style.context('dark_background'):
-                return func()
+            if rc is None:
+                with plt.style.context('dark_background'):
+                    return func()
+            else:
+                with plt.style.context('dark_background'), plt.rc_context(rc=rc):
+                    return func()    
         else:
             return func()
-
+          
 
     def _cmp(self) -> str:
         """get the color map associated with display modes"""

@@ -9,6 +9,7 @@ from collections.abc import Iterable
 import seaborn as sns
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
+from utils.colorhelper import ColorPalette
 
 """
 COLOR SETTING
@@ -202,6 +203,26 @@ def fill_missing_values_with_mean(df: DataFrame, pop_df: DataFrame, filter_cols:
 #     return pd.get_dummies(df, prefix=[cols], columns=cols)
 
 
+class DataVisualizer(ColorPalette):
+    def __init__(self, dark_mode: bool =True):
+        super().__init__(dark_mode=dark_mode)
+
+    
+    def display_feature_correlation(self, corr_df: DataFrame, apply_abs: bool=True) -> None:
+        if apply_abs:
+            corr = corr_df.apply(abs)
+        else:
+            corr = corr_df
+        # rc https://matplotlib.org/stable/tutorials/introductory/customizing.html
+        rc={'figure.figsize': [8, 7] } 
+        # plt.figure(figsize=(8,7))
+        # map = sns.heatmap(corr_df, annot=True, cmap="RdYlGn")   
+     
+        self._set_plot_style(
+            lambda: sns.heatmap(corr, annot=True, cmap=self._cmp()),         
+            rc=rc)
+
+
 @dataclass
 class KaggleData:
     train_path: str = ""
@@ -288,6 +309,7 @@ class KaggleData:
             # add the data_partition attribute to all data sample 
             all_dist_df = pd.concat([all_dist_df, df.assign(data_partition=location)])
         return all_dist_df
+
 
     def boxplot_dist(self, features=[], orient="v", marker="x", legend="lower right", dark_mode=True):
         """

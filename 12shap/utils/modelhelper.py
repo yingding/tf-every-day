@@ -88,9 +88,14 @@ class ModelExplainer(ColorPalette):
 
 
     def beeswarm_plot(self) -> None:
+        color="snow"
+        # https://matplotlib.org/stable/tutorials/introductory/customizing.html 
+        # rc = {'axes.facecolor': color, 'axes.labelcolor': color, 'xtick.color': color, 'ytick.color': color, 'text.color': color, 'xtick.labelcolor': color}
+        rc = {'axes.edgecolor': color}
         self._set_plot_style(lambda:
             # shap.plots.beeswarm(self.shap_values, cmap=self._cmp())
-            shap.plots.beeswarm(self.shap_values)         
+            shap.plots.beeswarm(self.shap_values),
+            rc=rc        
         )       
 
     
