@@ -219,6 +219,7 @@ class ModelKernelExplainer(ModelExplainer):
         # print(idx)
         # print(self.link)
         for label in self.labels:
+            print(f"\npredicted probability for label {label} == {'Perisched' if label == 0 else 'Survived'}")
             shap.plots.force(self.explainer.expected_value[label], 
                              self.shap_values[label][idx], self.data.iloc[idx], link=self.link, matplotlib=True)
         
