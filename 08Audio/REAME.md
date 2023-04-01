@@ -11,5 +11,8 @@ python3 -m pip freeze | xargs pip uninstall -y
 python3 -m pip list
 ```
 
+## VENV content
+
+
 # Reference:
 * Audio Data Preparation and Augmentation in TensorFlow: https://www.tensorflow.org/io/tutorials/audio
