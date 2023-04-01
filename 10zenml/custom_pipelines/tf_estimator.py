@@ -5,7 +5,9 @@ import tensorflow as tf
 from zenml.steps import step
 from util import get_local_time_str, MultiEpochProgbarLogger
 
-from tensorflow.keras.optimizers.legacy import Adam
+# WARNING tells M1/M2 tf.optimizers.Adam() is slow on M1/M2, legacy Adam is fast
+# from tensorflow.keras.optimizers.legacy import Adam
+
 # Work around for no XLA path support with using Adam form legacy,
 # instead of the default tf.optimizers.Adam()
 # https://developer.apple.com/forums/thread/721619
@@ -56,16 +58,17 @@ def tf_gpu_trainer(
     # progressbar_callback = tf.keras.callbacks.ProgbarLogger()
     multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps",display_per_epoch=20)
     
-    
 
     # 1D Integer encoded target sparse_categorical_crossentropy as loss funciton
     # one-hot encoded with categorical_crossentropy
-
     # model.compile(optimizer=tf.optimizers.Adam(), loss="categorical_crossentropy", metrics=['accuracy'])
+    
+    '''sparse categorical crossentropy'''
+    model.compile(optimizer=tf.optimizers.Adam(), loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
 
     # With tensorflow-metal we need to use the legacy Adam optimizer
     # https://developer.apple.com/forums/thread/721619
-    model.compile(optimizer=Adam(), loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
+    # model.compile(optimizer=Adam(), loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
 
     model.fit(x=X_train, y=y_train, batch_size=batch_size, epochs=epochs, verbose=1,
         validation_data=(X_test, y_test),
