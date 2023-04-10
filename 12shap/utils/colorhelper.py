@@ -6,6 +6,7 @@ class ColorPalette():
 
     cmp in Matplotlib
     https://matplotlib.org/stable/tutorials/colors/colormaps.html
+    https://matplotlib.org/3.3.1/tutorials/colors/colormaps.html
 
     possible Color Palette are:
     
@@ -33,8 +34,9 @@ class ColorPalette():
     'twilight_shifted_r', 'viridis', 'viridis_r', 'vlag', 'vlag_r', 'winter', 'winter_r'
     """
     def __init__(self, dark_mode: bool=False):
-        self.dark_cmp = "plasma" # "twilight" 
-        self.light_cmp = "viridis" # "inferno" # "Paired" is not a continues map, bad for shap summary plot
+        self.dark_cmp = "plasma" # "twilight" , "hsv"
+        self.light_cmp = "coolwarm" # used the same color in demo for light and dark to have common color code
+        # self.light_cmp = "viridis" # "inferno" # "Paired" is not a continues map, bad for shap summary plot
         self.dark_mode = dark_mode
 
 
