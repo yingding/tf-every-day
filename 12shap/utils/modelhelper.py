@@ -80,8 +80,6 @@ class ModelExplainer(ColorPalette):
             rc={'text.color': text_color, 'axes.labelcolor': text_color, 
                     'xtick.color': text_color, 'ytick.color': text_color }     
             with plt.rc_context(rc=rc):
-                print(text_color)
-                print(self._cmp())
                 # not using the plot_type since default for single and multi output are choosen automatically
                 shap.summary_plot(self.shap_values, self.data, cmap=self._cmp())
         return self._set_plot_style(inner)
@@ -117,6 +115,11 @@ class ModelExplainer(ColorPalette):
         self._set_plot_style(lambda: 
             shap.plots.scatter(self.shap_values[:, feature] , color=self.shap_values)
         )
+
+    def dependence_plot(self, class_idx: int, feature: str, interaction_feature: str = None) -> None:
+        self._set_plot_style(lambda:
+            shap.dependence_plot(feature, self.shap_values[int], self.data)                 
+        )     
     
 
     # @staticmethod
@@ -244,7 +247,25 @@ class ModelKernelExplainer(ModelExplainer):
 
     def beeswarm_plot(self) -> None:
         """override the ModelExplainer, no beeswarm for kernelExplainer"""
-        pass 
+        pass
+
+    def scatter_plot(self, feature: str, interaction_feature: str = None, class_label: int = None) -> None:
+        """
+        example:
+        explainer.scatter_plot(feature="Age", interaction_feature="Sex_female")
+        """
+        if class_label is not None:
+            labels = [class_label]
+        else:
+            labels = self.labels
+
+        for label in labels:
+            print(f"\npredicted probability for label {label} == {'Perisched' if label == 0 else 'Survived'}")
+            if interaction_feature is not None:
+                shap.dependence_plot(feature, self.shap_values[label], self.data, interaction_index=interaction_feature)
+            else:
+                # get interaction index automatically
+                shap.dependence_plot(feature, self.shap_values[label], self.data)    
                            
 
 class ModelValidator(ColorPalette):
