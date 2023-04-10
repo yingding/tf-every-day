@@ -110,16 +110,23 @@ class ModelExplainer(ColorPalette):
         )
              
 
-
-    def scatter_plot(self, feature: str) -> None:
-        self._set_plot_style(lambda: 
-            shap.plots.scatter(self.shap_values[:, feature] , color=self.shap_values)
-        )
-
-    def dependence_plot(self, class_idx: int, feature: str, interaction_feature: str = None) -> None:
-        self._set_plot_style(lambda:
-            shap.dependence_plot(feature, self.shap_values[int], self.data)                 
-        )     
+    def scatter_plot(self, feature: str, interact_feature: str = None, auto_interact_features: int = None) -> None:
+        """
+        param: auto_interact_features the number of max interact_features need to be chosen automatically
+        
+        """
+        if interact_feature is None and auto_interact_features is not None:
+            # use shap.approximate_interactions to guess which features may interact with age.
+            inds = shap.utils.potential_interactions(self.shap_values[:, feature], self.shap_values)
+            for i in range(auto_interact_features):
+                self._set_plot_style(lambda:
+                    # scatter plot api https://shap.readthedocs.io/en/latest/example_notebooks/api_examples/plots/scatter.html                 
+                    shap.plots.scatter(self.shap_values[:, feature] , color=self.shap_values[:, inds[i]])
+                )
+        else:
+            self._set_plot_style(lambda: 
+                    shap.plots.scatter(self.shap_values[:, feature] , color=self.shap_values[:, interact_feature])
+                )          
     
 
     # @staticmethod
@@ -199,9 +206,11 @@ class ModelKernelExplainer(ModelExplainer):
         # explainer is a callable object for tree models
         """ Notice: it tooks time to train the KernelExpainer, not the calculation of shap_values """
         # switched to kernel method instead of auto
+        # https://shap-lrjball.readthedocs.io/en/latest/generated/shap.KernelExplainer.html
+        # Outputs: Using 712 background data samples could cause slower run times. Consider using shap.sample(data, K) or shap.kmeans(data, K) to summarize the background as K samples.
         self.explainer = shap.KernelExplainer(
             model=model.predict_proba, data=train_data.to_numpy(), link=link,
-            # algorithm="kernel"
+            algorithm="kernel"
             )
 
         # KernelExplainer for any model, model agnostic 
@@ -214,6 +223,8 @@ class ModelKernelExplainer(ModelExplainer):
         https://shap-lrjball.readthedocs.io/en/latest/generated/shap.KernelExplainer.html#shap.KernelExplainer.shap_values
         """
         # self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples=50)
+        # outputs: the progressbar to calculate the shap_values
+        # we can also just pass X_valid.iloc[[0]] one row to calculate one shap value.
         self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples="auto")
 
     def force_plot(self, idx: int) -> None:
@@ -249,11 +260,17 @@ class ModelKernelExplainer(ModelExplainer):
         """override the ModelExplainer, no beeswarm for kernelExplainer"""
         pass
 
-    def scatter_plot(self, feature: str, interaction_feature: str = None, class_label: int = None) -> None:
+    def scatter_plot(self, feature: str, interact_feature: str = None, class_label: int = 1, **kwargs) -> None:
         """
+        using **kwargs allow max_interact_feature: int input
+
+        added additonal class_label defaut to the base class scatter_plot
         example:
         explainer.scatter_plot(feature="Age", interaction_feature="Sex_female")
         """
+        if "auto_interact_features" in kwargs:
+            warnings.warn("auto_interact_features is ignored.")
+
         if class_label is not None:
             labels = [class_label]
         else:
@@ -261,12 +278,16 @@ class ModelKernelExplainer(ModelExplainer):
 
         for label in labels:
             print(f"\npredicted probability for label {label} == {'Perisched' if label == 0 else 'Survived'}")
-            if interaction_feature is not None:
-                shap.dependence_plot(feature, self.shap_values[label], self.data, interaction_index=interaction_feature)
+            if interact_feature is not None:
+                self._set_plot_style(lambda:
+                    shap.dependence_plot(feature, self.shap_values[label], self.data, interaction_index=interact_feature)
+                )
             else:
                 # get interaction index automatically
-                shap.dependence_plot(feature, self.shap_values[label], self.data)    
-                           
+                self._set_plot_style(lambda:
+                    shap.dependence_plot(feature, self.shap_values[label], self.data)                      
+                )  
+                      
 
 class ModelValidator(ColorPalette):
     """Binary Classification Model Validator"""
