@@ -49,15 +49,15 @@ class ModelExplainer(ColorPalette):
         Note: Difference between Explainer and KernelExplainer
         Kernel Explainer:
         https://shap-lrjball.readthedocs.io/en/latest/generated/shap.KernelExplainer.html
-        Explainer:
+        Explainer: primary interface to call shap explainer, like a factory function
         https://shap.readthedocs.io/en/latest/generated/shap.Explainer.html
         """
         # feature data without label
         self.data = data
         # self.explainer = shap.Explainer(model, algorithm=algorithm)
 
-        # explainer is a callable object for tree models
-        self.explainer = shap.Explainer(model.predict, self.data, algorithm=algorithm)
+        # explainer will choose an optimal explaining methods
+        self.explainer = shap.Explainer(model=model.predict, masker=self.data, algorithm=algorithm)
 
         # KernelExplainer for any model, model agnostic 
         # https://github.com/slundberg/shap#model-agnostic-example-with-kernelexplainer-explains-any-function
