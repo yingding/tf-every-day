@@ -208,6 +208,8 @@ class ModelKernelExplainer(ModelExplainer):
         # switched to kernel method instead of auto
         # https://shap-lrjball.readthedocs.io/en/latest/generated/shap.KernelExplainer.html
         # Outputs: Using 712 background data samples could cause slower run times. Consider using shap.sample(data, K) or shap.kmeans(data, K) to summarize the background as K samples.
+        
+        # Initialize the explainer, and calculated the expected values
         self.explainer = shap.KernelExplainer(
             model=model.predict_proba, data=train_data.to_numpy(), link=link,
             algorithm="kernel"
@@ -225,7 +227,13 @@ class ModelKernelExplainer(ModelExplainer):
         # self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples=50)
         # outputs: the progressbar to calculate the shap_values
         # we can also just pass X_valid.iloc[[0]] one row to calculate one shap value.
+        '''Build a weighted linear regression model, for the local data to calculate shap value
+        This takes very much time
+        code of the kernel explainer
+        https://github.com/slundberg/shap/blob/master/shap/explainers/_kernel.py
+        '''
         self.shap_values = self.explainer.shap_values(self.data.to_numpy(), nsamples="auto")
+        
 
     def force_plot(self, idx: int) -> None:
         # super().force_plot(idx=idx, use_expected_value=True)
