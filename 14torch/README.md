@@ -14,6 +14,7 @@ python3 -m pip list
 ```
 
 Reference:
+* learning the pytorch basics: https://pytorch.org/tutorials/beginner/basics/intro.html
 * https://pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html
 * https://pytorch.org/
 * https://pytorch.org/docs/master/notes/mps.html
