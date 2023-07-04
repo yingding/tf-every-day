@@ -2,7 +2,8 @@
 import numpy as np
 import tensorflow as tf
 
-from zenml.steps import step
+# from zenml.steps import step
+from zenml import step
 from util import get_local_time_str, MultiEpochProgbarLogger
 
 # WARNING tells M1/M2 tf.optimizers.Adam() is slow on M1/M2, legacy Adam is fast

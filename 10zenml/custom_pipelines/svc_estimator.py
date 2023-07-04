@@ -3,7 +3,8 @@ import numpy as np
 from sklearn.base import ClassifierMixin
 from sklearn.svm import NuSVC
 
-from zenml.steps import step
+# from zenml.steps import step
+from zenml import step
 
 @step
 def svc_trainer(
