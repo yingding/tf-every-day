@@ -13,7 +13,9 @@ Constains
 
 ## example call:
 ```console
-source create_env.sh -p ~/VENV/tfx3.10 -v 3.10
+VERSION=3.10;
+ENV_NAME="tfx${VERSION}";
+source create_env.sh -p ~/VENV/${ENV_NAME} -v $VERSION
 ```
 creates a python3 venv of `python3.10` at path `~/VENV/tfx3.10` 
 
