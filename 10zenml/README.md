@@ -37,6 +37,22 @@ Open the browser and access tensorboard from the URL as prompt `http://localhost
 2. open `evaluation_accuracy_vs_iterations`
 3. open `evaluation_loss_vs_iterations`
 
+## Zenml local server
+Start the local server with
+```shell
+zenml up
+```
+
+Examine the local server status
+```shell
+zenml status
+```
+
+Stop the local server 
+```shell
+zenml down
+```
+
 ## Issue
 ### Zenml tfx dependency
 zenml is depending on ml-metadata, and which has no aarch64 package

@@ -1,4 +1,5 @@
-zenml==0.41.0 # 0.39.1 no fastapi dependency
+# zenml==0.42.1 # without server
+zenml[server]==0.42.1 # with server
 # tensorflow-macos==2.12.0
 # tensorflow-metal==0.8.0
 tensorflow==2.13.0
@@ -6,6 +7,5 @@ tensorflow-metal==1.0.1
 pandas==2.0.3 #1.5.3
 scikit-learn==1.3.0
 matplotlib==3.7.1
-# fastapi==0.99.1 # need by zenml onwards 0.36.0
-# model-card-toolkit
+# tfx-addons==0.6.0
 # model-card-toolkit==2.0.0 # still missing tensorflow-data-validation for generating data statistics
