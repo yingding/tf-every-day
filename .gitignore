@@ -153,5 +153,8 @@ logs/fit/**
 /**/logs/**
 /**/logs/fit/**
 
+/**/mlruns/**
+/**/tmp/**
+
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
