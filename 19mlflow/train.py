@@ -11,8 +11,27 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 # The following import and function call are the only additions to code required
 # to automatically log metrics and parameters to MLflow.
 import mlflow
+import time 
+
+# Set the run name to timestamp
+# run_name = str(time.time())
+# Set the run name to time string
+run_name = time.strftime("%Y-%m-%d_%H-%M-%S")
+
+# Create the experiment
+# default experiment id is 0
+experiment_name = "local"
+# search_pattern = f"name LIKE '{experiment_name}'"
+search_pattern = f"name = '{experiment_name}'"
+# search the experiment with the name, if doesn't exist will return an empty list
+experiments = mlflow.search_experiments(filter_string=search_pattern)
+if len(experiments) == 0:
+   experiment_id = mlflow.create_experiment(name=experiment_name)
+   print(f"experiment with string id {experiment_id} is created.")
 
 mlflow.tensorflow.autolog()
+mlflow.set_experiment(experiment_name=experiment_name)
+mlflow.set_tag("mlflow.runName", run_name)
 
 max_words = 1000
 batch_size = 32
@@ -56,3 +75,10 @@ history = model.fit(
 score = model.evaluate(x_test, y_test, batch_size=batch_size, verbose=1)
 print("Test score:", score[0])
 print("Test accuracy:", score[1])
+
+# Log the model
+# mlruns/0/run_id/artifacts/my_models/
+# otherwise the autolog() is saving the model at
+# mlruns/0/run_id/artifacts/model/
+# for mlflow 2.5.0
+# mlflow.tensorflow.log_model(model, artifact_path="my_models")

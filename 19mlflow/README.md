@@ -59,5 +59,10 @@ python3 -m pip freeze | xargs pip uninstall -y
 python3 -m pip list
 ```
 
+## Open MLflow UI
+```shell
+mlflow ui
+``````
+
 Reference:
 * MLflow examples: https://mlflow.org/docs/latest/tutorials-and-examples/index.html
