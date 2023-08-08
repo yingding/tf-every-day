@@ -147,6 +147,9 @@ pipelines/**
 logs/**
 logs/fit/**
 
+mlruns/**
+tmp/**
+
 # for all zenml subfolders to ignore the run logs
 # https://stackoverflow.com/questions/2545602/how-to-git-ignore-subfolders-subdirectories
 # **/logs/**
