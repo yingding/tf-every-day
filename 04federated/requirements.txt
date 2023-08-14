@@ -1,0 +1,20 @@
+tensorflow==2.13.0
+tensorflow-metal==1.0.1
+# tensorflow-compression==2.13.0
+Cython==3.0.0
+h5py==3.9.0
+# 0.4.8 
+# tensorflow-federated==0.1.0
+# tensorflow-federated==0.34.0
+jaxlib
+portpicker
+farmhashpy
+dm-tree
+jax
+semantic-version
+tensorflow-model-optimization
+tensorflow-privacy
+#tensorflow-privacy==0.8.4
+attr==0.3.2
+attrs==21.4.0
+dp-accounting==0.4.2
