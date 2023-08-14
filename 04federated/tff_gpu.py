@@ -34,7 +34,7 @@ state = trainer.initialize()
 
 # measure time elapse
 start_time = time.time()
-for _ in range(1):
+for _ in range(5):
   result = trainer.next(state, train_data)
   state = result.state
   metrics = result.metrics
