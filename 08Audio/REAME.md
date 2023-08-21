@@ -43,6 +43,7 @@ ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV"
 source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
 # ipython kernel install --user --name=${ENV_NAME}
+python3 -m pip install ipykernel
 python3 -m ipykernel install --user --name=${ENV_NAME} --display-name ${ENV_NAME}
 ```
 Note: 
