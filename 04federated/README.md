@@ -44,11 +44,10 @@ deactivate
 We need to reactivate the venv so that the ipython kernel is available after installation.
 ```shell
 VERSION=3.9;
-PREFIX=tff;
+PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV"
 source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
-# ipython kernel install --user --name=${ENV_NAME}
 python3 -m ipykernel install --user --name=${ENV_NAME} --display-name ${ENV_NAME}
 ```
 Note: 

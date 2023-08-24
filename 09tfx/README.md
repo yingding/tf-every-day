@@ -11,46 +11,82 @@ Following the instruction of On-device Training to
 
 
 ## Create a python venv with zsh automation script
+<!-- 
 ```console
 pushd envtools
 source create_env.sh -p ~/VENV/tfx3.9 -v 3.9
 popd
 ```
+-->
+
+```shell
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+ENV_ROOT="$HOME/VENV";
+source ./envtools/create_env.sh -p ${ENV_ROOT}/${ENV_NAME} -v $VERSION
+```
 Note: 
-* at the time of writing, the `tfx==1.10.0` only support `python3.9`
+* at the time of writing, the `tfx==1.13.0` only support `python3.9`, NOT `python3.10`
 
 ## Install packages
-```console
-cd 09tfx/
-source ~/VENV/tfx3.9/bin/activate
-
-python3 -m pip install -r requirements.txt  --no-cache-dir 
+```shell
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+PROJ="./09tfx";
+ENV_ROOT="$HOME/VENV";
+source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
+cd $PROJ;
+python3 -m pip install -r requirements.txt --no-cache
 ```
 
 ## Add a jupyter notebook kernel to VENV
-```console
-source ~/VENV/tfx3.9/bin/activate
+```shell
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+ENV_ROOT="$HOME/VENV"
+source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
 python3 -m pip install --upgrade pip
 python3 -m pip install ipykernel
 deactivate
 ```
 
 We need to reactivate the venv so that the ipython kernel is available after installation.
-```
-source ~/VENV/tfx3.9/bin/activate
-ipython kernel install --user --name=tfx3.9
+```shell
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+ENV_ROOT="$HOME/VENV"
+source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
+# ipython kernel install --user --name=${ENV_NAME}
+python3 -m ipykernel install --user --name=${ENV_NAME} --display-name ${ENV_NAME}
 ```
 Note: 
-* restart the vs code, to select the venv as jupyter notebook kernel
-* name is `tfx3.9`, which is the venv name.
+* restart the vs code, to select the venv as jupyter notebook kernel 
+* name is `${ENV_NAME}`, which is the venv name.
 
 Reference:
+* https://ipython.readthedocs.io/en/stable/install/kernel_install.html
 * https://anbasile.github.io/posts/2017-06-25-jupyter-venv/
 
-## (optional) Uninstall all package
-Just in case things goes wrong, use the following cmd to uninstall all python packages.
-```console
-source ~/VENV/tfx3.9/bin/activate
+## Remove ipykernel
+```shell
+# jupyter kernelspec uninstall -y <VENV_NAME>
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+jupyter kernelspec uninstall -y ${ENV_NAME}
+```
+
+## Remove all package from venv
+```shell
+VERSION=3.9;
+PREFIX=tfx;
+ENV_NAME="${PREFIX}${VERSION}";
+ENV_ROOT="$HOME/VENV"
+source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
 python3 -m pip freeze | xargs pip uninstall -y
 python3 -m pip list
 ```
