@@ -1,5 +1,7 @@
 ## pip install --upgrade pip
-## On Intel Mac (tensorflow-metal works with tensorflow)
+## On Intel Mac (tensorflow-metal works with tensorflow) and also (tensorflow-macos, tfx, tensorlfow-metal) works with AMD GPU accelerator
+
+# tensorflow-macos==2.12.0
 tensorflow==2.12.0
 tensorflow-metal==0.8.0
 tfx==1.13.0
