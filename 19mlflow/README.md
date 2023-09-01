@@ -20,7 +20,7 @@ python3 -m pip install -r requirements.txt --no-cache
 ```
 
 ## Add a jupyter notebook kernel to VENV
-```console
+```shell
 VERSION=3.10;
 ENV_NAME="mlflow${VERSION}";
 source ~/VENV/${ENV_NAME}/bin/activate

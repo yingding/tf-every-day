@@ -12,10 +12,10 @@ Constains
 - call `source create_env.sh -p <path/envname> -v <3.8|3.9|3.10>` to create a python venv using python package from home brew
 
 ## example call:
-```console
+```shell
 VERSION=3.10;
 ENV_NAME="tfx${VERSION}";
-source create_env.sh -p ~/VENV/${ENV_NAME} -v $VERSION
+source ./envtools/create_env.sh -p ~/VENV/${ENV_NAME} -v $VERSION
 ```
 creates a python3 venv of `python3.10` at path `~/VENV/tfx3.10` 
 
