@@ -5,4 +5,4 @@
 ## On apple silicon
 tensorflow==2.13.0
 tensorflow-metal==1.0.1
-# tensorflow-io
+tensorflow-io==0.34.0
