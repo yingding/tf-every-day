@@ -6,9 +6,12 @@ def test_gpu():
     if (tf.test.gpu_device_name()):
         print(f"{tf.test.gpu_device_name()}")
 
-
-def test_tfio():
-    strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0"], cross_device_ops=tf.distribute.NcclAllReduce())
+def test_tfio(use_gpu: bool = True):
+    if use_gpu:
+        devices = ["/gpu:0"]
+    else:
+        devices = ["/cpu:0"]
+    strategy = tf.distribute.MirroredStrategy(devices=devices, cross_device_ops=tf.distribute.NcclAllReduce())
     with strategy.scope():
         path = tf.keras.utils.get_file(
             fname='setero.wav', 
@@ -28,7 +31,7 @@ def test_tfio():
 
 def main():
     test_gpu()
-    test_tfio()
+    test_tfio(use_gpu=False)
 
 if __name__ == "__main__":
     main()
