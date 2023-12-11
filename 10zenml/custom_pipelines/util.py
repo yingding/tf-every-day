@@ -24,6 +24,8 @@ class MultiEpochProgbarLogger(tensorflow.keras.callbacks.ProgbarLogger):
     def on_epoch_end(self, epoch, logs=None):
         if epoch % self.display_per_epochs == 0:
             super().on_epoch_end(epoch, logs)
+            # 
+
 
 
 # class NBatchLogger(Callback):

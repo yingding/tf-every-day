@@ -59,7 +59,7 @@ def tf_gpu_trainer(
     # nbatch_progbar_callback = NBatchProgBarLogger(display_per_batches=10)
     # nbatch_callback = NBatchLogger(display=10)
     # progressbar_callback = tf.keras.callbacks.ProgbarLogger()
-    multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps",display_per_epoch=20)
+    multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps", display_per_epoch=20)
     
 
     # 1D Integer encoded target sparse_categorical_crossentropy as loss funciton
