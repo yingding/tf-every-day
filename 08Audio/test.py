@@ -11,28 +11,19 @@ def test_tfio(use_gpu: bool = True):
         devices = ["/gpu:0"]
     else:
         devices = ["/cpu:0"]
-
-    path = tf.keras.utils.get_file(
-            fname='setero.wav', 
-            origin='https://upload.wikimedia.org/wikipedia/commons/e/ef/Bach_C_minor_Passacaglia_variation_with_ostinato_in_treble.wav',
-            )
-    
-    print(f"audio file path: {path}")
-    # audio_io = tfio.IODataset.from_audio(path)
-    audio_io = tfio.IOTensor.from_audio(path)
     
     strategy = tf.distribute.MirroredStrategy(devices=devices, cross_device_ops=tf.distribute.NcclAllReduce())
 
     with strategy.scope():
-        # path = tf.keras.utils.get_file(
-        #     fname='setero.wav', 
-        #     origin='https://upload.wikimedia.org/wikipedia/commons/e/ef/Bach_C_minor_Passacaglia_variation_with_ostinato_in_treble.wav',
-        #     )
+        path = tf.keras.utils.get_file(
+            fname='setero.wav', 
+            origin='https://upload.wikimedia.org/wikipedia/commons/e/ef/Bach_C_minor_Passacaglia_variation_with_ostinato_in_treble.wav',
+            )
         
-        # print(path)
+        print(path)
 
         # Open the file as a `tf.data.Dataset`
-        # audio_ds = tfio.IODataset.from_audio(path)
+        audio_ds = tfio.IODataset.from_audio(path)
         # => <AudioIODataset shapes: (2,), types: tf.int16>
 
         # Or as a virtual Tensor that loads what's needed.
