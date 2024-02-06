@@ -20,7 +20,7 @@ PROJ="./08Audio";
 ENV_ROOT="$HOME/VENV";
 source ${ENV_ROOT}/${ENV_NAME}/bin/activate;
 cd $PROJ;
-python3 -m pip install -r requirements.txt --no-cache
+python3 -m pip install -r ${PROJ}/requirements.txt --no-cache-dir
 ```
 
 ## Add a jupyter notebook kernel to VENV
