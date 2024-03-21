@@ -6,17 +6,6 @@ from svc_estimator import svc_trainer
 from util import get_local_time_str
 from tf_estimator import tf_gpu_trainer
 
-# @pipeline
-# def first_pipeline(step_1, step_2, step_3):
-#     X_train, X_test, y_train, y_test = step_1()
-#     step_2(X_train, y_train)
-#     step_3(X_train, y_train, X_test, y_test)
-
-# first_pipeline_instance = first_pipeline(
-#     step_1=digits_data_loader(),
-#     step_2=svc_trainer(),
-#     step_3=tf_gpu_trainer()
-# )
 
 @pipeline
 def first_pipeline():

@@ -14,17 +14,31 @@ def get_local_time_str(target_tz_str: str = "Europe/Berlin", format_str: str = "
     target_dt = datetime.now(target_tz)
     return datetime.strftime(target_dt, format_str)
 
-
+# https://github.com/keras-team/keras/blob/v3.1.1/keras/callbacks/progbar_logger.py#L7
 class MultiEpochProgbarLogger(tensorflow.keras.callbacks.ProgbarLogger):
-    def __init__(self, count_mode='samples', stateful_metrics=None, display_per_epoch=1000, verbose=1):
-        super().__init__(count_mode, stateful_metrics)
-        self.display_per_epochs = display_per_epoch
-        self.verbose = verbose
+    def __init__(self, count_mode='samples', stateful_metrics=None, display_per_epochs=10, display_per_steps=16, verbose=1):
+        # super().__init__(count_mode, stateful_metrics)
+        super().__init__()
+        self.set_params({"epochs": display_per_epochs, "steps": display_per_steps, "verbose" : verbose})
+        # self.display_per_epochs = display_per_epoch
+        # self.verbose = verbose
 
     def on_epoch_end(self, epoch, logs=None):
-        if epoch % self.display_per_epochs == 0:
+        if (epoch % self.epochs) == 0:
             super().on_epoch_end(epoch, logs)
-            # 
+    
+    def on_epoch_begin(self, epoch, logs=None):
+        if (epoch % self.epochs) == 0:
+            super().on_epoch_begin(epoch, logs)
+
+    def on_step_begin(self, step, logs=None):
+        if (step % self.steps) == 0:
+            super().on_step_begin(step, logs)
+
+    def on_step_end(self, step, logs=None):
+        if (step % self.steps) == 0:
+            super().on_step_end(step, logs)
+        
 
 
 

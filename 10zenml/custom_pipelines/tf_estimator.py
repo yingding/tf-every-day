@@ -7,8 +7,12 @@ from zenml import step
 from util import get_local_time_str, MultiEpochProgbarLogger
 
 # WARNING tells M1/M2 tf.optimizers.Adam() is slow on M1/M2, legacy Adam is fast
+# from tensorflow.keras.optimizers.legacy import Adam
 
-from tensorflow.keras.optimizers.legacy import Adam
+# TF 2.16.1
+from tensorflow.keras.optimizers import Adam
+
+# TF 2.15 
 # from tensorflow.optimizers import Adam
 
 # Work around for no XLA path support with using Adam form legacy,
@@ -44,7 +48,8 @@ def tf_gpu_trainer(
     # print(y_logits.shape)
 
     model = tf.keras.Sequential([
-         tf.keras.layers.Flatten(input_shape=(64,)),
+         # tf.keras.layers.Flatten(input_shape=(64,)),
+         tf.keras.Input(shape=(64,)),
          tf.keras.layers.Dense(16, activation=tf.nn.relu),
          tf.keras.layers.Dropout(0.1),
          tf.keras.layers.Dense(10, activation=tf.nn.softmax)
@@ -59,7 +64,7 @@ def tf_gpu_trainer(
     # nbatch_progbar_callback = NBatchProgBarLogger(display_per_batches=10)
     # nbatch_callback = NBatchLogger(display=10)
     # progressbar_callback = tf.keras.callbacks.ProgbarLogger()
-    multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps", display_per_epoch=20)
+    multiEpochProgbarLogger = MultiEpochProgbarLogger(count_mode="steps", display_per_epochs=1, display_per_steps=10)
     
 
     # 1D Integer encoded target sparse_categorical_crossentropy as loss funciton
@@ -77,6 +82,7 @@ def tf_gpu_trainer(
         validation_data=(X_test, y_test),
         callbacks=[multiEpochProgbarLogger, tensorboard_callback]
     )
+    print("\n")
     print(model.summary())
 
     # https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/

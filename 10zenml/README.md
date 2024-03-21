@@ -5,8 +5,9 @@ This repo creates an example mnist zenml pipeline on apple silicon with gpu trai
 
 ## Install packages 
 ```
+PROJ="./10zenml";
 pip install --upgrade pip
-python3 -m pip install -r requirements.txt --no-cache
+python3 -m pip install -r ${PROJ}/requirements.txt --no-cache
 ```
 ## Remove all package from venv
 ```
