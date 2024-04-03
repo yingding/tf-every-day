@@ -17,7 +17,7 @@
 showhelp() {
     echo "
         please pass option:
-        -v|--version 3.8 | 3.9 | 3.10
+        -v|--version 3.8 | 3.9 | 3.10 | 3.11
         -p|--path ~/VENV/test
 
         example: 
@@ -95,7 +95,7 @@ check_cmd_exists() {
 ## create user env
 create_env() {
     case $pythonversion in 
-        3.8|3.9|3.10) 
+        3.8|3.9|3.10|3.11) 
             # echo "$mycmd"
             eval ${mycmd};
             # making env is successful
@@ -152,8 +152,8 @@ done
 if [[ -z "$pythonversion" || -z "$envpath" ]]; then
     showhelp
 else
-    if ! [[ $pythonversion =~ ^(3.8|3.9|3.10) ]]; then
-        echo "-v|--version can only be one of 3.8|3.9|3.10"
+    if ! [[ $pythonversion =~ ^(3.8|3.9|3.10|3.11) ]]; then
+        echo "-v|--version can only be one of 3.8|3.9|3.10|3.11"
     else
         check_user_agree
         exec_main
