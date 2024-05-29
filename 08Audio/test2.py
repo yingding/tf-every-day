@@ -30,9 +30,18 @@ def test_tfio(use_gpu: bool = True):
         d_train = d_train.batch(32)
 
         # Build the model.
+        # model = tf.keras.models.Sequential(
+        #     [
+        #         tf.keras.layers.Flatten(input_shape=(28, 28)),
+        #         tf.keras.layers.Dense(512, activation=tf.nn.relu),
+        #         tf.keras.layers.Dropout(0.2),
+        #         tf.keras.layers.Dense(10, activation=tf.nn.softmax),
+        #     ]
+        # )
         model = tf.keras.models.Sequential(
             [
-                tf.keras.layers.Flatten(input_shape=(28, 28)),
+                tf.keras.layers.Input(shape=(28, 28)),
+                tf.keras.layers.Flatten(),
                 tf.keras.layers.Dense(512, activation=tf.nn.relu),
                 tf.keras.layers.Dropout(0.2),
                 tf.keras.layers.Dense(10, activation=tf.nn.softmax),
