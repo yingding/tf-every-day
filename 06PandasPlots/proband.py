@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 print(os.getcwd())
-df = pd.read_csv('06PandasPlots/proband.csv')
+df = pd.read_csv('06PandasPlots/data/proband.csv')
 print(df)
 
 
