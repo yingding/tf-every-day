@@ -6,6 +6,13 @@ Provides zsh scripts to setup a python venv on your macbook quickly
 - home brew shall be installed on your macosx system
 - the python3 version 3.8, 3.9 or 3.10 is installed on your macosx system with home brew
 
+```shell
+brew search python@3.12
+brew uninstall python@3.12
+brew install python@3.12
+brew info python@3.12
+```
+
 ## envtool
 Constains
 - call `source shell_info.sh` to determine whether your have a zsh activated on your macosx
