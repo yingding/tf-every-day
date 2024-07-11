@@ -60,6 +60,11 @@ python3 -m pip list
 ```
 
 ## Apache beam
+* Github beam examples https://github.com/apache/beam/tree/master/sdks/python/apache_beam/examples
 
-Reference:
+```shell
+python3 -m wordcount --input ./data/input.txt --output ./data/out.txt --runner DirectRunner
+```
+
+## Reference:
 * Beam WordCount Python quickstart https://beam.apache.org/get-started/quickstart-py/
