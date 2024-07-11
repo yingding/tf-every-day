@@ -1,10 +1,10 @@
-cre # About this project
+# About this project
 
 Provides zsh scripts to setup a python venv on your macbook quickly
 
 ## conditions
 - home brew shall be installed on your macosx system
-- the python3 version 3.8, 3.9 or 3.10 is installed on your macosx system with home brew
+- the python3 version 3.8, 3.9 ,3.10, 3.11, 3.12 is installed on your macosx system with home brew
 
 ```shell
 brew search python@3.12
