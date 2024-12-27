@@ -20,7 +20,7 @@ popd
 -->
 
 ```shell
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV";
@@ -31,7 +31,7 @@ Note:
 
 ## Install packages
 ```shell
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 PROJ="./09tfx";
@@ -43,7 +43,7 @@ python3 -m pip install -r requirements.txt --no-cache
 
 ## Add a jupyter notebook kernel to VENV
 ```shell
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV"
@@ -55,7 +55,7 @@ deactivate
 
 We need to reactivate the venv so that the ipython kernel is available after installation.
 ```shell
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV"
@@ -74,7 +74,7 @@ Reference:
 ## Remove ipykernel
 ```shell
 # jupyter kernelspec uninstall -y <VENV_NAME>
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 jupyter kernelspec uninstall -y ${ENV_NAME}
@@ -82,7 +82,7 @@ jupyter kernelspec uninstall -y ${ENV_NAME}
 
 ## Remove all package from venv
 ```shell
-VERSION=3.9;
+VERSION=3.10;
 PREFIX=tfx;
 ENV_NAME="${PREFIX}${VERSION}";
 ENV_ROOT="$HOME/VENV"
